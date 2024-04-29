@@ -1,13 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Szia fiam! A neved: <span id="name"></span>
+    
+    <script>
+        async function nev() {
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+            const apiUrl = 'https://api.namefake.com/';
+
+            const res = await fetch(proxyUrl + apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const name = data.name;
+                    return name;
+                });
+
+            document.getElementById('name').innerText = res;
+        }
+
+        nev();
+    </script>
+</body>
 </html>
