@@ -42,8 +42,11 @@ async function login() {
         const userData = await logging.json();
 
         if (userData.status == 200) {
-            localStorage.setItem('token', responseData.token);
-            console.log('Token added to localStorage');
+            const Mainap = new Date();
+            Mainap.setDate(Mainap.getDate() + 14);
+            document.cookie = `token=${token}; path=/; expires=${Mainap.toUTCString()};`;
+
+            console.log('Token added to cocckie');
             location.href = './index.html';
         } else {
             alert('Hiba történt a bejelentkezés során!');

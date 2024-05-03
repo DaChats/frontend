@@ -8,7 +8,11 @@ function addToken(token) {
 async function checklogin() {
     console.log('checklogin() called');
     const div = document.getElementById('login');
-    const token = localStorage.getItem('token');
+
+    // get token from cookie
+
+    const token = document.cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1];
+    console.log(token);
 
     if (token) {
         const getUserData = await fetch(`http://localhost:3000/api/auth/login?token=${token}`, {
@@ -41,7 +45,7 @@ async function checklogin() {
         </a>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item"  href="#">Beszélgess</a></li>
-          <li><a class="dropdown-item" href="#" onclick="localStorage.removeItem('token'); location.reload();">Kijelentkezés</a></li>
+          <li><a class="dropdown-item" href="#" onclick="document.cookie = 'token=; path=/;'; location.reload();">Kijelentkezés</a></li>
         </ul>
         </li>
         </div>`;
