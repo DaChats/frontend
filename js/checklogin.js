@@ -34,8 +34,16 @@ async function checklogin() {
 
         div.innerHTML = `
         <div>
-            <img style="border-radius: 360px; width: 40px; height: 40px; gap: 100px;" src="http://localhost:3000/api/files?filename=${avatar}" alt="">
-            <span style="font-size: 120%; color: white; padding: 15px;">${username}</span>
+        <li class="nav-item dropdown" style="list-style-type: none; ">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img style="border-radius: 360px; width: 40px; height: 40px; gap: 100px;" src="http://localhost:3000/api/files?filename=${avatar}" alt="">
+        <span style="font-size: 120%; color: white; padding: 15px;">${username}</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item"  href="#">Profilom</a></li>
+          <li><a class="dropdown-item" href="#" onclick="localStorage.removeItem('token'); location.reload();">Kijelentkezés</a></li>
+        </ul>
+        </li>
         </div>`;
     } else {
         div.innerHTML = '<a class="nav-link" href="./login.html"><img src="images/login button.png" alt="Login"></a>';

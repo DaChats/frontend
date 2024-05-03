@@ -29,7 +29,7 @@
     bottom: 0;
     width: 100%;
     text-align: center;
-    background-color: #212529;
+    background: blur(5px);
   }
   .nomarginpadding{
     margin: 0;
