@@ -46,7 +46,7 @@ async function login() {
             Mainap.setDate(Mainap.getDate() + 14);
             document.cookie = `token=${token}; path=/; expires=${Mainap.toUTCString()};`;
 
-            console.log('Token added to cocckie');
+            console.log('Token added to coockie');
             location.href = './index.html';
         } else {
             alert('Hiba történt a bejelentkezés során!');
