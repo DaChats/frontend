@@ -40,7 +40,7 @@ async function checklogin() {
         <span style="font-size: 120%; color: white; padding: 15px;">${username}</span>
         </a>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item"  href="#">Profilom</a></li>
+          <li><a class="dropdown-item"  href="#">Beszélgess</a></li>
           <li><a class="dropdown-item" href="#" onclick="localStorage.removeItem('token'); location.reload();">Kijelentkezés</a></li>
         </ul>
         </li>
