@@ -4,7 +4,8 @@ async function checklogin() {
     console.log('checklogin() called');
     const div = document.getElementById('login');
 
-    const token = document.cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1];
+    const cookie = document.cookie;
+    const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
     console.log(token);
 
     if (token) {
@@ -37,7 +38,7 @@ async function checklogin() {
         <span style="font-size: 120%; color: white; padding: 15px;">${username}</span>
         </a>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item"  href="#">Üzenőfal</a></li>
+          <li><a class="dropdown-item"  href="./dashboard/index.html">Üzenőfal</a></li>
           <li><a class="dropdown-item" href="#" onclick="document.cookie = 'token=; path=/;'; location.reload();">Kijelentkezés</a></li>
         </ul>
         </li>
