@@ -42,3 +42,29 @@
   .gradient-bg {
     background: linear-gradient(140deg, #5A230C 0%, #5F2C17 70%, #755547 100%);
   }
+
+  
+h1 {
+    background: linear-gradient(140deg, #5A230C 0%, #755547 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.border-radius-15{
+  border-radius: 15px;
+}
+.fieldset {
+    border: 1px solid #755547;
+    border-radius: 20px;
+    padding: 10px;
+    width: 400px;
+    margin:auto;
+}
+
+.input{
+  background-color: #9C9B9B;
+  border-color: #9C9B9B;
+  border-top: #9C9B9B;
+  border-left: #9C9B9B;
+  width: 200px;
+}
