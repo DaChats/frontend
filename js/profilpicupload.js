@@ -8,31 +8,27 @@ async function upload() {
         return;
     }
 
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-        const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
+    const formData = new FormData();
+    formData.append('avatar', filetoUpload);
 
-        const res = await fetch(`http://localhost:3000/api/user/avatar?token=${token}`, {
+    try {
+        const res = await fetch(`http://localhost:3000/api/avatar?token=${token}`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ picture: base64String })
+            body: formData,
         });
 
         if (!res.ok) {
-            alert('Hiba történt a kép feltöltése során!');
-            return;
+            throw new Error('Hiba történt a kép feltöltése során!');
         }
 
         const avatarData = await res.json();
 
-        if (avatarData.status == 200) {
+        if (avatarData.status === 200) {
             window.location.reload();
         } else {
-            alert('Hiba történt a kép feltöltése során!');
-            return;
+            throw new Error('Hiba történt a kép feltöltése során!');
         }
-    };
-    reader.readAsDataURL(filetoUpload);
+    } catch (error) {
+        alert(error.message);
+    }
 }
