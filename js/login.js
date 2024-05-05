@@ -1,4 +1,11 @@
 const form = document.getElementById('login');
+const cookie = document.cookie;
+const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
+console.log(token);
+
+if (token) {
+    location.href = './index.html';
+}
 
 async function login() {
     const username = document.getElementById('username').value;
@@ -36,6 +43,10 @@ async function login() {
 
         if (!logging.ok) {
             alert('Hiba történt a bejelentkezés során!');
+            return;
+        } else if (logging.message == "User is not verified") {
+            alert('Kérlek hitelesítsd az email címed!');
+            window.location.href = './verify.html';
             return;
         }
 

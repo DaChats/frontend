@@ -1,0 +1,43 @@
+async function verify() {
+    const code = document.getElementById('code').value;
+
+    if (!code) {
+        alert('Nem adtál meg minden adatot!');
+        return;
+    }
+
+    try {
+        const verifyResponse = await fetch(`http://localhost:3000/api/auth/verify?code=${code}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (!verifyResponse.ok) {
+            alert('Hiba történt a hitelesítés során!');
+            return;
+        }
+
+        const responseData = await verifyResponse.json();
+        console.log(responseData);
+
+        if (responseData.status == 200) {            
+            const token = responseData.data.token;
+            const Mainap = new Date();
+            Mainap.setDate(Mainap.getDate() + 14);
+            document.cookie = `token=${token}; path=/; expires=${Mainap.toUTCString()};`;
+            location.href = './index.html';
+        } else {
+            alert('Hiba történt a hitelesítés során!');
+            return;
+        }
+    } catch (error) {
+        console.error('Hiba történt:', error);
+    }
+}
+
+async function ide() {
+    alert('Nem...')
+    return;
+}
