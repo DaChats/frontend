@@ -3,7 +3,10 @@ async function userloggedin() {
 
     const cookie = document.cookie;
     const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
+    const useridCookie = document.cookie.split('; ').find(row => row.startsWith('userid='));
+    const userid = useridCookie ? useridCookie.split('=')[1] : null;    
     console.log(token);
+    console.log(userid);
 
     if (token) {
         const getUserData = await fetch(`http://localhost:3000/api/auth/login?token=${token}`, {
@@ -20,6 +23,13 @@ async function userloggedin() {
             h1.innerHTML = `Üdvözöllek ${userData.data.name}!`;
 
             console.log('user is logged in: ' + userData.data.name);
+
+            if (!userid) {
+                document.cookie = `userid=${userData.data.id}; path=/;`;
+                console.log('userid cookie set');
+            } else {
+                console.log('userid cookie already set');
+            }
         } else {
             alert('Kérlek jelentzzbe előbb!');
             window.location.href = '../login.html';

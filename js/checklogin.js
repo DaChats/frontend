@@ -39,10 +39,10 @@ async function checklogin() {
         </a>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item"  href="./dashboard/index.html">Üzenőfal</a></li>
-          <li><a class="dropdown-item" href="#" onclick="document.cookie = 'token=; path=/;'; location.reload();">Kijelentkezés</a></li>
+          <li><a class="dropdown-item" href="#" onclick="document.cookie = 'token=; path=/;'; location.reload(); document.cookie = 'userid=; path=/;'; location.reload();">Kijelentkezés</a></li>
         </ul>
         </li>
-        </div>`;
+        </div>`;token
     } else {
         div.innerHTML = '<a class="nav-link" href="./login.html"><img src="images/login button.png" alt="Login"></a>';
     }
