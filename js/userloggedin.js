@@ -18,12 +18,8 @@ async function userloggedin() {
 
         if (getUserData.status == 200) {
             const userData = await getUserData.json();
-            const h1 = document.getElementById('udv');
-
-            h1.innerHTML = `Üdvözöllek ${userData.data.name}!`;
-
             console.log('user is logged in: ' + userData.data.name);
-
+            
             if (!userid) {
                 document.cookie = `userid=${userData.data.id}; path=/;`;
                 console.log('userid cookie set');
