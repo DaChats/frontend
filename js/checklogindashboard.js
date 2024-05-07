@@ -1,0 +1,51 @@
+console.log('checklogin.js loaded');
+
+async function checklogin() {
+    console.log('checklogin() called');
+    const div = document.getElementById('login');
+
+    const cookie = document.cookie;
+    const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
+    console.log(token);
+
+    if (token) {
+        const getUserData = await fetch(`http://localhost:3000/api/auth/login?token=${token}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+
+        if (!getUserData.ok) {
+            alert('Hiba történt a bejelentkezés során!');
+            return;
+        }
+
+        const userData = await getUserData.json();
+        console.log(userData);
+
+        const username = await userData.data.name;
+        const avatar = await userData.data.avatar;
+
+        console.log(username);
+        console.log(avatar);
+
+        div.innerHTML = `
+        <div>
+        <li class="nav-item dropdown" style="list-style-type: none; ">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img style="border-radius: 360px; width: 40px; height: 40px; gap: 100px;" src="http://localhost:3000/api/files?filename=${avatar}" alt="">
+        <span style="font-size: 120%; color: white; padding: 15px;">${username}</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item"  href="../index.html">Főoldal</a></li>
+          <li><a class="dropdown-item" href="#" onclick="document.cookie = 'token=; path=/;'; location.reload(); document.cookie = 'userid=; path=/;'; location.reload();">Kijelentkezés</a></li>
+        </ul>
+        </li>
+        </div>`;token
+    } else {
+        div.innerHTML = '<a class="nav-link" href="./login.html"><img src="images/login button.png" alt="Login"></a>';
+    }
+}
+
+checklogin();
