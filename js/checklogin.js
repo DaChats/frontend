@@ -42,7 +42,7 @@ async function checklogin() {
           <li><a class="dropdown-item" href="#" onclick="document.cookie = 'token=; path=/;'; location.reload(); document.cookie = 'userid=; path=/;'; location.reload();">Kijelentkezés</a></li>
         </ul>
         </li>
-        </div>`;token
+        </div>`;
     } else {
         div.innerHTML = '<a class="nav-link" href="./login.html"><img src="images/login button.png" alt="Login"></a>';
     }

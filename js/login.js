@@ -39,7 +39,7 @@ async function login() {
         });
 
         if (!loginResponse.ok) {
-            alert('Hiba történt a bejelentkezés során!');
+            alert('Hiba történt a bejelentkezés során! (Szerver nem elérhető!)');
             return;
         }
 
@@ -50,10 +50,10 @@ async function login() {
         const logging = await fetch(`http://localhost:3000/api/auth/login?token=${token}`);
 
         if (!logging.ok) {
-            alert('Hiba történt a bejelentkezés során!');
+            alert('Hiba történt a bejelentkezés során! (Szerver nem elérhető!)');
             return;
         } else if (logging.message == "User is not verified") {
-            alert('Kérlek hitelesítsd az email címed!');
+            alert('Kérlek hitelesítsd az email címed! (Ellenőrizd a spam mappádat is!)');
             window.location.href = './verify.html';
             return;
         }
@@ -67,7 +67,7 @@ async function login() {
             console.log('Token added to cookie');
             location.href = './index.html';
         } else {
-            alert('Hiba történt a bejelentkezés során!');
+            alert('Hiba történt a bejelentkezés során! (Rossz adatok!)');
             return;
         }
     } catch (error) {

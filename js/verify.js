@@ -2,7 +2,7 @@ async function verify() {
     const code = document.getElementById('code').value;
 
     if (!code) {
-        alert('Nem adtál meg minden adatot!');
+        alert('Nem adtad meg a kódot!');
         return;
     }
 
@@ -15,7 +15,7 @@ async function verify() {
         });
 
         if (!verifyResponse.ok) {
-            alert('Hiba történt a hitelesítés során!');
+            alert('Hiba történt a hitelesítés során! (Szerver nem nem elérhető!)');
             return;
         }
 
@@ -29,7 +29,7 @@ async function verify() {
             document.cookie = `token=${token}; path=/; expires=${Mainap.toUTCString()};`;
             location.href = './index.html';
         } else {
-            alert('Hiba történt a hitelesítés során!');
+            alert('Hiba történt a hitelesítés során! (Rossz kód!)');
             return;
         }
     } catch (error) {

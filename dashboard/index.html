@@ -15,6 +15,10 @@
     <div class="container-fluid">
         <div class="servernav"></div>
         <div class="chatouter"></div>
+        <div>
+            <input type="text" class="form-control" id="search" placeholder="Keresés" oninput="userkerese(this.value)">
+            <div class="col-2" id="users"></div>
+        </div>
     </div>
     <script src="../js/ws.js"></script>
     <script src="../js/checklogindashboard.js"></script>

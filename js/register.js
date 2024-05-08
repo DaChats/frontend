@@ -30,7 +30,7 @@ async function register() {
         });
 
         if (!registerResponse.ok) {
-            alert('Hiba történt a regisztráció során!');
+            alert('Hiba történt a regisztráció során! (Szerver nem elérhető!)');
             return;
         }
 
@@ -40,7 +40,7 @@ async function register() {
         if (responseData.status == 200) {
             location.href = './verify.html';
         } else {
-            alert('Hiba történt a regisztráció során!');
+            alert('Hiba történt a regisztráció során! (Rossz adatok!)');
             return;
         }
     } catch (error) {
