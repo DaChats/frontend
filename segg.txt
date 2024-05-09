@@ -1,20 +1,4 @@
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <h1 class="display-1">DaChats</h1>
-          <p class="lead">A legjobb chat alkalmazás a világon!</p>
-          <p class="lead">Ez az alkalmazás a Discord és a Teamspeak 3 alkalmazásokat ötvözi egy olyan alkalmazásba, amelynek minden funkciója ingyenes!</p>
-          <p class="lead">Az alkalmazás letöltése ingyenes, és bármikor használható!</p>
-          <a href="./download.html" class="btn btn-primary">Letöltés</a>
-        </div>
-        <div class="col-md-6">
-          <img src="images/image1.png" alt="DaChats" class="img-fluid">
-        </div>
-      </div>
-    </div>
-
-        <p>Profilkép feltöltés</p>
-        <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg">
-        <button type="submit" name="submit" onclick="upload()">Feltöltés</button>
-
-    <script src="../js/profilpicupload.js"></script>
+<p>Profilkép feltöltés</p>
+<input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg">
+<button type="submit" name="submit" onclick="upload()">Feltöltés</button>
+<script src="../js/profilpicupload.js"></script>

@@ -2,7 +2,7 @@ async function userkerese(kereses) {
     console.log('userkerese() called');
     console.log(kereses);
 
-    if (kereses.length < 3) {
+    if (kereses.length < 1) {
         console.log('így nehéz lesz..')
         return;
     }
@@ -34,8 +34,8 @@ async function userkerese(kereses) {
             <a role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <img style="border-radius: 360px; width: 40px; height: 40px; gap: 100px;" src="http://localhost:3000/api/files?filename=${user.avatar}" alt="">
                 <span style="font-size: 120%; color: white; padding: 15px;">${user.username}</span>
-                <!-- Add here the friend button! onclick="addfriend(user.id)" and then the + button pic -->
             </a>
+            <a href="#" onclick="addfriend('${user.id}')"><img src="../images/gomb(1).png"></a>
         </div>
     `;
         container.appendChild(container.content);
