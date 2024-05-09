@@ -9,7 +9,7 @@ async function userloggedin() {
     console.log(userid);
 
     if (token) {
-        const getUserData = await fetch(`http://localhost:3000/api/auth/login?token=${token}`, {
+        const getUserData = await fetch(`https://api.dachats.online/api/auth/login?token=${token}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

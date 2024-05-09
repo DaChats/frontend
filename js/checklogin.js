@@ -9,7 +9,7 @@ async function checklogin() {
     console.log(token);
 
     if (token) {
-        const getUserData = await fetch(`http://localhost:3000/api/auth/login?token=${token}`, {
+        const getUserData = await fetch(`https://api.dachats.online/api/auth/login?token=${token}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ async function checklogin() {
         <div>
         <li class="nav-item dropdown" style="list-style-type: none; ">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <img style="border-radius: 360px; width: 40px; height: 40px; gap: 100px;" src="http://localhost:3000/api/files?filename=${avatar}" alt="">
+        <img style="border-radius: 360px; width: 40px; height: 40px; gap: 100px;" src="https://api.dachats.online/api/files?filename=${avatar}" alt="">
         <span style="font-size: 120%; color: white; padding: 15px;">${username}</span>
         </a>
         <ul class="dropdown-menu">

@@ -7,7 +7,7 @@ async function verify() {
     }
 
     try {
-        const verifyResponse = await fetch(`http://localhost:3000/api/auth/verify?code=${code}`, {
+        const verifyResponse = await fetch(`https://api.dachats.online/api/auth/verify?code=${code}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

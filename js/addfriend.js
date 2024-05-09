@@ -12,7 +12,7 @@ async function addfriend(id) {
         return;
     }
 
-    const addfriend = await fetch(`http://localhost:3000/api/user/addfriend`, {
+    const addfriend = await fetch(`https://api.dachats.online/api/user/addfriend`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

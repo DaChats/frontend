@@ -30,7 +30,7 @@ async function login() {
     };
 
     try {
-        const loginResponse = await fetch('http://localhost:3000/api/auth/token', {
+        const loginResponse = await fetch('https://api.dachats.online/api/auth/token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ async function login() {
         console.log(responseData);
         const token = responseData.token;
 
-        const logging = await fetch(`http://localhost:3000/api/auth/login?token=${token}`);
+        const logging = await fetch(`https://api.dachats.online/api/auth/login?token=${token}`);
 
         if (!logging.ok) {
             alert('Hiba történt a bejelentkezés során! (Szerver nem elérhető!)');

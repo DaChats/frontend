@@ -5,7 +5,7 @@ const cookie = document.cookie;
 userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
 
 async function connectWS() {
-    socket = io(`http://localhost:3000?userid=${userid}&chaid=1234563`);
+    socket = io(`https://api.dachats.online?userid=${userid}&chaid=1234563`);
     socket.on('connect', () => {
         console.log('Connected to WS server.');
     });

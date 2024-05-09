@@ -12,7 +12,7 @@ async function upload() {
     formData.append('avatar', filetoUpload);
 
     try {
-        const res = await fetch(`http://localhost:3000/api/avatar?token=${token}`, {
+        const res = await fetch(`https://api.dachats.online/api/avatar?token=${token}`, {
             method: 'POST',
             body: formData,
         });

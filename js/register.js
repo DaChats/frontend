@@ -21,7 +21,7 @@ async function register() {
     }
 
     try {
-        const registerResponse = await fetch('http://localhost:3000/api/auth/register', {
+        const registerResponse = await fetch('https://api.dachats.online/api/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

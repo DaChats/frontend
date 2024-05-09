@@ -11,7 +11,7 @@ async function userkerese(kereses) {
     const userid = useridCookie ? useridCookie.split('=')[1] : null;
     console.log(userid);
 
-    const users = await fetch('http://localhost:3000/api/users', {
+    const users = await fetch('https://api.dachats.online/api/users', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ async function userkerese(kereses) {
             container.innerHTML = `
         <div>
             <a role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img style="border-radius: 360px; width: 40px; height: 40px; gap: 100px;" src="http://localhost:3000/api/files?filename=${user.avatar}" alt="">
+                <img style="border-radius: 360px; width: 40px; height: 40px; gap: 100px;" src="https://api.dachats.online/api/files?filename=${user.avatar}" alt="">
                 <span style="font-size: 120%; color: white; padding: 15px;">${user.username}</span>
             </a>
             <a href="#" onclick="addfriend('${user.id}')"><img src="../images/gomb(1).png"></a>
