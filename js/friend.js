@@ -34,3 +34,38 @@ async function addfriend(id) {
         return;
     }
 }
+
+async function removefriend(id) {
+    console.log('removefriend() called');
+
+    const cookie = document.cookie;
+    const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
+
+    if (!token) {
+        alert('Kérlek jelentkezz be!');
+        window.location.href = '../login.html';
+        return;
+    }
+
+    const removefriend = await fetch(`https://api.dachats.online/api/user/removefriend`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id: id,
+            token: token
+        })
+    })
+
+    const removefriendData = await removefriend.json();
+    console.log(removefriendData);
+
+    if (removefriend.status == 200) {
+        alert('Sikeres törlés!');
+        window.location.reload();
+    } else {
+        alert(removefriendData.message);
+        return;
+    }
+}
