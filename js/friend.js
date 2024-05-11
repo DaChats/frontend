@@ -47,7 +47,7 @@ async function removefriend(id) {
         return;
     }
 
-    const removefriend = await fetch(`https://api.dachats.online/api/user/removefriend`, {
+    const removefriend = await fetch(`https://api.dachats.online/api/removefriend`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

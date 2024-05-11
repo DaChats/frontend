@@ -13,15 +13,16 @@ async function userkerese(kereses) {
     const userid = useridCookie ? useridCookie.split('=')[1] : null;
     console.log(userid);
 
-    const user = await fetch(`https://api.dachats.online/api/user/friends?token=${token}`, {
+    const friends = await fetch(`https://api.dachats.online/api/friends?token=${token}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
     })
 
-    const userData = await user.json();
-    console.log(userData);
+    const friendsData = await friends.json();
+
+    console.log(friendsData);
 
     const users = await fetch('https://api.dachats.online/api/users', {
         method: 'GET',
@@ -34,38 +35,34 @@ async function userkerese(kereses) {
         const userData = await users.json();
         console.log(userData);
 
-        const filteredUsers = userData.users.filter(user => user.username.includes(kereses));
+        if (userData && userData.users && userData.users.length > 0) {
+            const filteredUsers = userData.users.filter(user => user.username.includes(kereses));
 
-        console.log(filteredUsers)
+            console.log(filteredUsers)
 
-        const container = document.getElementById('users');
+            const container = document.getElementById('users');
+            container.innerHTML = '';
 
-        filteredUsers.forEach(user => {
-            if (userData.data.includes(id)) {
-                container.innerHTML = `
-                <div>
-                <a role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img style="border-radius: 360px; width: 40px; height: 40px; gap: 100px;" src="https://api.dachats.online/api/files?filename=${user.avatar}" alt="">
-                    <span style="font-size: 120%; color: white; padding: 15px;">${user.username}</span>
-                </a>
-                <a href="#" onclick="removefriend('${user.id}')"><img src="../images/gomb.png"></a>
-            </div>`;
-            } else {
-                container.innerHTML = `
-        <div>
-            <a role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img style="border-radius: 360px; width: 40px; height: 40px; gap: 100px;" src="https://api.dachats.online/api/files?filename=${user.avatar}" alt="">
-                <span style="font-size: 120%; color: white; padding: 15px;">${user.username}</span>
-            </a>
-            <a href="#" onclick="addfriend('${user.id}')"><img src="../images/gomb(1).png"></a>
-        </div>
-    `;
-            }
-            container.appendChild(container.content);
-        });
+            filteredUsers.forEach(user => {
+                const friendAction = friendsData.data && friendsData.data.includes(user.id) ? `removefriend('${user.id}')` : `addfriend('${user.id}')`;
+                const friendActionIcon = friendsData.data && friendsData.data.includes(user.id) ? 'gomb.png' : 'gomb(1).png';
 
-    } else {
-        alert('Nincs felhasználó!');
-        return;
+                const userDiv = document.createElement('div');
+                userDiv.innerHTML = `
+                    <a role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img style="border-radius: 360px; width: 40px; height: 40px; gap: 100px;" src="https://api.dachats.online/api/files?filename=${user.avatar}" alt="">
+                        <span style="font-size: 120%; color: white; padding: 15px;">${user.username}</span>
+                    </a>
+                    <a href="#" onclick="${friendAction}"><img src="../images/${friendActionIcon}"></a>
+                `;
+
+                container.appendChild(userDiv);
+            });
+
+        } else {
+            alert('Nincs felhasználó!');
+            return;
+        }
+
     }
 }
