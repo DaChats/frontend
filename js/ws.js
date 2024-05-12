@@ -2,10 +2,10 @@ let socket;
 let userid;
 
 const cookie = document.cookie;
-userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
+const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
 
 async function connectWS() {
-    socket = io(`https://api.dachats.online?userid=${userid}&chaid=1234563`);
+    socket = io(`http://localhost:3003?token=${token}&chaid=926728`);
     socket.on('connect', () => {
         console.log('Connected to WS server.');
     });
