@@ -20,7 +20,7 @@ async function getChats() {
 
     const friendsList = friendsData.data;
     const div = document.getElementById('chats');
-    let html = ''; 
+    let html = '';
 
     for (let i = 0; i < friendsList.length; i++) {
         const friendid = friendsList[i];
@@ -35,29 +35,37 @@ async function getChats() {
 
         const friendUsername = friendData.data.username;
         const friendavatar = friendData.data.avatar;
+        const friendstatus = friendData.data.status;
 
-        html += `
+        console.log(friendUsername);
+        console.log(friendavatar);
+        console.log(friendstatus);
+
+            html += `
         <div class="chat" onclick="getChat('${friendid}')" id="${friendid}">
-        <img src="https://api.dachats.online/api/files?filename=${friendavatar}" alt="user" class="chat-img">
-        <p class="chat-name">${friendUsername}</p>
-        </div>
+                        <div class="chat-img-container">
+                            <img src="https://api.dachats.online/api/files?filename=${friendavatar}" alt="user" class="chat-img" onerror="this.style.display='none'; document.querySelector('.status-dot').classList.add('${friendstatus}');">
+                            <div class="status-dot-${friendstatus}"></div>
+                        </div>
+                        <p class="chat-name">${friendUsername}</p>
+                    </div>    
         `;
+        }
+
+        div.innerHTML = html;
     }
 
-    div.innerHTML = html;
-}
+    getChats();
 
-getChats();
+    async function getChat(friendid) {
+        console.log('getChat() called');
+        console.log(friendid);
 
-async function getChat(friendid) {
-    console.log('getChat() called');
-    console.log(friendid);
+        const chatElements = document.querySelectorAll('.chat');
+        chatElements.forEach(element => {
+            element.classList.remove("active");
+        });
 
-    const chatElements = document.querySelectorAll('.chat');
-    chatElements.forEach(element => {
-        element.classList.remove("active");
-    });
-
-    const div = document.getElementById(friendid);
-    div.classList.add("active");
-}
+        const div = document.getElementById(friendid);
+        div.classList.add("active");
+    }

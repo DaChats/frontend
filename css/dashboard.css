@@ -294,3 +294,34 @@ button {
         left: -300px;
     }
 }
+
+.chat-img-container {
+    position: relative;
+    display: inline-block;
+}
+
+.status-dot-online {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #43b581;
+    position: absolute;
+    top: calc(100% - 5px);
+    transform: translateX(50%);
+    right: 0;
+}
+
+.status-dot-offline {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #575757;
+    position: absolute;
+    top: calc(100% - 5px);
+    transform: translateX(50%);
+    right: 0;
+}
+
+.status-dot.online {
+    display: block;
+}
