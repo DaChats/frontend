@@ -26,23 +26,18 @@ async function checklogin() {
 
         const username = await userData.data.name;
         const avatar = await userData.data.avatar;
+        const status = await userData.data.status;
 
         console.log(username);
         console.log(avatar);
 
-        const div = document.getElementById('login');
+        const div = document.getElementById('user-info');
         div.innerHTML = `
-        <div>
-        <li class="nav-item dropdown" style="list-style-type: none; ">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <img style="border-radius: 360px; width: 40px; height: 40px; gap: 100px;" src="https://api.dachats.online/api/files?filename=${avatar}" alt="">
-        <span style="font-size: 120%; color: white; padding: 15px;">${username}</span>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item"  href="./dashboard/index.html">Üzenőfal</a></li>
-          <li><a class="dropdown-item" href="#" onclick="document.cookie = 'token=; path=/;'; location.reload(); document.cookie = 'userid=; path=/;'; location.reload();">Kijelentkezés</a></li>
-        </ul>
-        </li>
+        <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="user-img">
+                    
+        <div class="user-info">
+            <p class="user-name">${username}</p>
+            <p class="user-status">${status}</p>
         </div>`;
 
     } else {
