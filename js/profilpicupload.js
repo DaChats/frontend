@@ -1,5 +1,4 @@
 async function upload() {
-    const filetoUpload = document.getElementById('file').files[0];
     const token = document.cookie ? document.cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
 
     if (!token) {
@@ -8,26 +7,24 @@ async function upload() {
         return;
     }
 
-    const formData = new FormData();
-    formData.append('avatar', filetoUpload);
-
     try {
-        const res = await fetch(`https://api.dachats.online/api/avatar?token=${token}`, {
-            method: 'POST',
-            body: formData,
-        });
+        const input = document.getElementById('img');
 
-        if (!res.ok) {
-            throw new Error('Hiba történt a kép feltöltése során!');
-        }
+        const upload = (file) => {
+            fetch(`http://localhost:3003/api/avatar?token=${token}`, {
+                method: 'POST',
+                body: file
+            }).then(
+                response => response.json()
+            ).then(
+                success => console.log(success)
+            ).catch(
+                error => console.log(error) 
+            );
+        };
 
-        const avatarData = await res.json();
-
-        if (avatarData.status === 200) {
-            window.location.reload();
-        } else {
-            throw new Error('Hiba történt a kép feltöltése során!');
-        }
+        const onSelectFile = () => upload(input.files[0]);
+        input.addEventListener('change', onSelectFile, false);
     } catch (error) {
         alert(error.message);
     }
