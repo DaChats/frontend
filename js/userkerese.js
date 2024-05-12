@@ -49,11 +49,11 @@ async function userkerese(kereses) {
 
                 const userDiv = document.createElement('div');
                 userDiv.innerHTML = `
-                    <a role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img style="border-radius: 360px; width: 40px; height: 40px; gap: 100px;" src="https://api.dachats.online/api/files?filename=${user.avatar}" alt="">
-                        <span style="font-size: 120%; color: white; padding: 15px;">${user.username}</span>
-                    </a>
-                    <a href="#" onclick="${friendAction}"><img src="../images/${friendActionIcon}"></a>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <img style="border-radius: 360px; width: 40px; height: 40px;" src="https://api.dachats.online/api/files?filename=${user.avatar}" alt="">
+                        <span style="font-size: 100%; color: white; padding: 15px;">${user.username}</span>
+                        <a href="#" onclick="${friendAction}"><img src="../images/${friendActionIcon}"></a>
+                    </div>
                 `;
 
                 container.appendChild(userDiv);
