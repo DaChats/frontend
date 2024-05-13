@@ -51,7 +51,7 @@
 
             <div class="chat-container">
                 <div class="chat-header">
-                    <div class="chat-user">
+                    <div class="chat-user" id="chat-user">
                         <img src="../images/user.png" alt="user" class="chat-img">
                         <p class="chat-name">Chat</p>
                     </div>
@@ -61,32 +61,13 @@
                     </button>
                 </div>
 
-                <div class="chat-messages">
-                    <div class="chat-message">
-                        <img src="../images/user.png" alt="user" class="chat-img">
-                        <p class="chat-text">Hello</p>
-                    </div>
+                <div class="chat-messages" id="messages">
 
-                    <div class="chat-message user2">
-                        <img src="../images/user.png" alt="user" class="chat-img">
-                        <p class="chat-text">Hello</p>
-                    </div>
-
-                    <div class="chat-message">
-                        <img src="../images/user.png" alt="user" class="chat-img">
-                        <p class="chat-text">Hello</p>
-                    </div>
-
-                    <div class="chat-message">
-                        <img src="../images/user.png" alt="user" class="chat-img">
-                        <p class="chat-text">Hello</p>
-                    </div>
                 </div>
 
                 <div class="chat-input">
-                    <input type="text" class="message-input" placeholder="írj ide valamit...">
-
-                    <button class="send-btn" type="button">
+                    <input type="text" class="message-input" id="message-input" placeholder="írj ide valamit...">
+                    <button class="send-btn" type="button" onclick="sendMessage()">
                         Küldés
                     </button>
                 </div>
@@ -99,5 +80,4 @@
         <script src="../js/sidebar.js"></script>
         <script src="../js/dashboardChats.js"></script>
     </body>
-
 </html>
