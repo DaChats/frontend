@@ -171,11 +171,36 @@ async function getChat(chatid) {
 
 async function sendMessage() {
     const usermessage = document.getElementById('message-input').value;
+    const button = document.getElementById('send-btn');
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            button.click();
+        }
+    });
 
     if (!usermessage) {
         console.error('Missing message');
         return;
     }
+
+    if (usermessage.length > 1000) {
+        console.error('Message too long');
+        return;
+    }
+
+    if (usermessage.length < 1) {
+        console.error('Message too short');
+        return;
+    }
+
+    // if the message is link then it will be replaced with a clickable link
+    
+    const link = usermessage.match(/(https?:\/\/[^\s]+)/g);
+    if (link) {
+        usermessage = usermessage.replace(link[0], `<a href="${link[0]}" target="_blank">${link[0]}</a>`);
+    }
+
+    document.getElementById('message-input').value = '';
 
     const cookie = document.cookie;
     const userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
