@@ -192,8 +192,6 @@ async function sendMessage() {
         console.error('Message too short');
         return;
     }
-
-    // if the message is link then it will be replaced with a clickable link
     
     const link = usermessage.match(/(https?:\/\/[^\s]+)/g);
     if (link) {
