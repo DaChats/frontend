@@ -158,7 +158,7 @@ async function getChat(chatid) {
     // Connect to chatid WS
 
     async function connectWS() {
-        socket = io(`https://api.dachats.online?token=${token}&chaid=${chatid}`);
+        socket = io(`wss://api.dachats.online?token=${token}&chaid=${chatid}`);
         socket.on('connect', () => {
             console.log('Connected to WS server.');
         });
