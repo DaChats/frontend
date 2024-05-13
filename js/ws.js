@@ -20,3 +20,4 @@ function sendMessage() {
     const data = { message, time, from };
     socket.emit('message', data);
 }
+

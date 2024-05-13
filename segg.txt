@@ -1,4 +1,0 @@
-<p>Profilkép feltöltés</p>
-<input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg">
-<button type="submit" name="submit" onclick="upload()">Feltöltés</button>
-<script src="../js/profilpicupload.js"></script>

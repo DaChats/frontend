@@ -41,8 +41,28 @@ async function getChats() {
         console.log(friendavatar);
         console.log(friendstatus);
 
-            html += `
-        <div class="chat" onclick="getChat('${friendid}')" id="${friendid}">
+        const chats = await fetch(`https://api.dachats.online/api/chats?token=${token}`);
+        const chatsData = await chats.json();
+        console.log(chatsData)
+
+        if (chatsData.status != 200) {
+            console.error(chatsData.message);
+            return;
+        }
+
+        const chatList = chatsData.data;
+        let chatid = '';
+
+        for (let i = 0; i < chatList.length; i++) {
+            if (chatList[i].members.includes(friendid)) {
+                chatid = chatList[i].chatId;
+                console.log(chatid);
+            }
+        }
+
+
+        html += `
+        <div class="chat" onclick="getChat('${chatId}')" id="${friendid}">
                         <div class="chat-img-container">
                             <img src="https://api.dachats.online/api/files?filename=${friendavatar}" alt="user" class="chat-img" onerror="this.style.display='none'; document.querySelector('.status-dot').classList.add('${friendstatus}');">
                             <div class="status-dot-${friendstatus}"></div>
@@ -50,22 +70,22 @@ async function getChats() {
                         <p class="chat-name">${friendUsername}</p>
                     </div>    
         `;
-        }
-
-        div.innerHTML = html;
     }
 
-    getChats();
+    div.innerHTML = html;
+}
 
-    async function getChat(friendid) {
-        console.log('getChat() called');
-        console.log(friendid);
+getChats();
 
-        const chatElements = document.querySelectorAll('.chat');
-        chatElements.forEach(element => {
-            element.classList.remove("active");
-        });
+async function getChat(friendid) {
+    console.log('getChat() called');
+    console.log(friendid);
 
-        const div = document.getElementById(friendid);
-        div.classList.add("active");
-    }
+    const chatElements = document.querySelectorAll('.chat');
+    chatElements.forEach(element => {
+        element.classList.remove("active");
+    });
+
+    const div = document.getElementById(friendid);
+    div.classList.add("active");
+}
