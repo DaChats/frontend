@@ -9,8 +9,10 @@
         <link rel="stylesheet" href="../../css/icon.css">
         <link rel="stylesheet" href="../../css/style.css">
         <link rel="stylesheet" href="../../css/dashboard.css">
-        <title>DaChats dashboard</title>
+        <title>DaChats Dashboard | Profile</title>
         <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+        <!-- Favicon -->
+        <link rel="icon" href="../../images/Logo64px.png" type="image/x-icon">
     </head>
 
     <body class="Gotham" data-bs-theme="dark" style="height: 100%; background-color: #252525;">
@@ -28,21 +30,14 @@
                 <a class="nav-link" href="../../dashboard/index.html" class="mt-2"><img class="" src="../../images/x.png" alt=""></a>
             </div>
             <h1 class="text-center my-5">Saját fiók</h1>
-            <div class="fieldset1 col-6">
-                <div class="align-items-center d-flex flex-column">
-                    <img src="https://api.dachats.online/api/files?filename=devbeni.jpeg" alt="user" class="chat-img" style="width: 150px; height: 150px; border-radius: 50%;  border: 12.5px solid #1C1C1C;" onerror="this.style.display='none'; document.querySelector('.status-dot').classList.add('online');">
-                    <a class="nav-link" onclick="login()" class="mt-2"><img src="../../images/pp.png" alt="Login" class="mt-3"></a>
-                </div>
-                <div class="row m-3">
-                    <div class="col-4"><h6>Megjelenített Név</h6><p>devbeni</p></div>
-                    <div class="col-4"><h6>E-mail</h6><p>xbenix2020@gmail.com</p></div>
-                    <div class="col-4"><h6>Felhasználó Azonosító</h6><p>bbf668b31b</p></div>
-                </div>
+            <div class="fieldset1 col-6" id="profile">
+                
             </div>
             
             
           </div>
     </body>
+    <script src="../../js/checkloginprofile.js"></script>
 </html>
 
 <!--                         
