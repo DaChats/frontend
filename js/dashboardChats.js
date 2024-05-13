@@ -158,12 +158,12 @@ async function getChat(chatid) {
     // Connect to chatid WS
 
     async function connectWS() {
-    socket = io(`https://api.dachats.online?token=${token}&chaid=${chatid}`);
-    socket.on('connect', () => {
-        console.log('Connected to WS server.');
-    });
+        socket = io(`https://api.dachats.online?token=${token}&chaid=${chatid}`);
+        socket.on('connect', () => {
+            console.log('Connected to WS server.');
+        });
 
-    socket.emit('join', { chatid });
+        socket.emit('join', { chatid });
     }
 
     connectWS();
@@ -185,10 +185,10 @@ async function sendMessage() {
     const data = { usermessage, time, from };
     socket.emit('message', data);
 
-    const messagesContainer = document.getElementById('messages');       
+    const messagesContainer = document.getElementById('messages');
 
     const user = await fetch(`https://api.dachats.online/api/user/${from}`);
-    const userData = await user.json(); 
+    const userData = await user.json();
 
     console.log(userData)
 
@@ -199,14 +199,14 @@ async function sendMessage() {
 
     const avatar = userData.data.avatar;
 
-    html += `
-    <div class="chat-message">
-    <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
-    <p class="chat-text">${usermessage}</p>
-    </div>
+    let html = `
+        <div class="chat-message">
+            <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
+            <p class="chat-text">${usermessage}</p>
+        </div>
     `;
 
-    messagesContainer.innerHTML = html;
+    messagesContainer.innerHTML += html;
 }
 
 socket.on('message', (data) => {
@@ -237,14 +237,14 @@ socket.on('message', (data) => {
         return;
     }
 
-    const messagesContainer = document.getElementById('messages');        
+    const messagesContainer = document.getElementById('messages');
 
-    html += `
+    let html = `
     <div class="chat-message user2">
-    <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
-    <p class="chat-text">${username}</p>
+        <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
+        <p class="chat-text">${username}</p>
     </div>
     `;
 
-    messagesContainer.innerHTML = html;
+    messagesContainer.innerHTML += html;
 });

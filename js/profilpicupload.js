@@ -11,7 +11,7 @@ async function upload() {
         const input = document.getElementById('img');
 
         const upload = (file) => {
-            fetch(`http://localhost:3003/api/avatar?token=${token}`, {
+            fetch(`https://api.dachats.online/api/avatar?token=${token}`, {
                 method: 'POST',
                 body: file
             }).then(
