@@ -193,10 +193,10 @@ async function sendMessage() {
         return;
     }
     
-    const link = usermessage.match(/(https?:\/\/[^\s]+)/g);
-    if (link) {
-        usermessage = usermessage.replace(link[0], `<a href="${link[0]}" target="_blank">${link[0]}</a>`);
-    }
+    // let link = usermessage.match(/(https?:\/\/[^\s]+)/g);
+    // if (link) {
+    //    usermessage = usermessage.replace(link[0], `<a href="${link[0]}" target="_blank">${link[0]}</a>`);
+    // }
 
     document.getElementById('message-input').value = '';
 
