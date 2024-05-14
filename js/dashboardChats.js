@@ -125,18 +125,24 @@ async function getChat(chatid) {
         const time = chatMessages[i].time;
         const from = chatMessages[i].from;
 
+        var urlRegex = /(https?:\/\/[^\s]+)/g;
+    
+        var linkedMessage = message.replace(urlRegex, function(url) {
+            return '<a href="' + url + '">' + url + '</a>';
+        });
+
         if (from === currentUser.id) {
             html += `
                 <div class="chat-message">
                     <img src="https://api.dachats.online/api/files?filename=${currentUser.avatar}" alt="user" class="chat-img">
-                    <p class="chat-text">${message}</p>
+                    <p class="chat-text">${linkedMessage}</p>
                 </div>
             `;
         } else {
             html += `
                 <div class="chat-message user2">
                     <img src="https://api.dachats.online/api/files?filename=${friend.avatar}" alt="user" class="chat-img">
-                    <p class="chat-text">${message}</p>
+                    <p class="chat-text">${linkedMessage}</p>
                 </div>
             `;
         }
@@ -215,10 +221,16 @@ async function sendMessage() {
 
     const avatar = userData.data.avatar;
 
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    
+    var linkedMessage = usermessage.replace(urlRegex, function(url) {
+        return '<a href="' + url + '">' + url + '</a>';
+    });
+
     let html = `
         <div class="chat-message">
             <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
-            <p class="chat-text">${usermessage}</p>
+            <p class="chat-text">${linkedMessage}</p>
         </div>
     `;
 
@@ -254,10 +266,16 @@ socket.on('message', (data) => {
 
     const messagesContainer = document.getElementById('messages');
 
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    
+    var linkedMessage = data.usermessage.replace(urlRegex, function(url) {
+        return '<a href="' + url + '">' + url + '</a>';
+    });
+
     let html = `
     <div class="chat-message user2">
         <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
-        <p class="chat-text">${data.usermassege}</p>
+        <p class="chat-text">${linkedMessage}</p>
     </div>
     `;
 
