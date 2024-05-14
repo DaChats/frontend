@@ -16,9 +16,11 @@ async function checklogin() {
             }
         })
 
-        if (!getUserData.ok) {
+        if (!getUserData) {
             alert('Hiba történt a bejelentkezés során!');
             return;
+        } else {
+            div.innerHTML = '<a class="nav-link" href="./login.html"><img src="images/login button.png" alt="Login"></a>';
         }
 
         const userData = await getUserData.json();
