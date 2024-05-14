@@ -125,10 +125,7 @@ async function getChat(chatid) {
         const time = chatMessages[i].time;
         const from = chatMessages[i].from;
 
-        const cookie = document.cookie;
-        const userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
-
-        if (from === currentUser.id || from === userid) {
+        if (from === currentUser.id) {
             html += `
                 <div class="chat-message">
                     <img src="https://api.dachats.online/api/files?filename=${currentUser.avatar}" alt="user" class="chat-img">
@@ -180,6 +177,12 @@ async function sendMessage() {
 
     if (usermessage.length < 1) {
         console.error('Message too short');
+        return;
+    }
+
+    const htmlTag = usermessage.match(/<[^>]*>/g);
+    if (htmlTag) {
+        console.error('HTML tag found');
         return;
     }
 
