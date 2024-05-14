@@ -114,48 +114,40 @@ async function getChat(chatid) {
 
     messagesContainer.innerHTML = '';
 
+    const currentUserID = chatData.data.members[0].id;
+    const friendID = chatData.data.members[1].id;
+
     for (let i = 0; i < chatMessages.length; i++) {
         const message = chatMessages[i].message;
         const time = chatMessages[i].time;
         const from = chatMessages[i].from;
 
-        const user = await fetch(`https://api.dachats.online/api/user/${from}`);
-        const userData = await user.json();
+        const user = (from == currentUserID) ? currentUserID : friendID;
 
-        console.log(userData);
-
-        if (userData.status != 200) {
-            console.error(userData.message);
-            return;
-        }
-
-        const username = userData.data.username;
-        const avatar = userData.data.avatar;
-        const id = userData.data.id;
+        const avatar = user.avatar;
+        const id = user.id;
 
         const cookie = document.cookie;
         const userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
 
-        if (id == userid) {
+        if (from === currentUserID || from === userid) {
             html += `
-        <div class="chat-message">
-        <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
-        <p class="chat-text">${message}</p>
-        </div>
-        `;
+                <div class="chat-message">
+                    <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
+                    <p class="chat-text">${message}</p>
+                </div>
+            `;
         } else {
             html += `
-        <div class="chat-message user2">
-        <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
-        <p class="chat-text">${message}</p>
-        </div>
-        `;
+                <div class="chat-message user2">
+                    <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
+                    <p class="chat-text">${message}</p>
+                </div>
+            `;
         }
 
         messagesContainer.innerHTML = html;
     }
-
-    // Connect to chatid WS
 
     async function connectWS() {
         socket = io(`https://api.dachats.online?token=${token}&chaid=${chatid}`);
@@ -171,34 +163,11 @@ async function getChat(chatid) {
 
 async function sendMessage() {
     const usermessage = document.getElementById('message-input').value;
-    const button = document.getElementById('send-btn');
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            button.click();
-        }
-    });
 
     if (!usermessage) {
         console.error('Missing message');
         return;
     }
-
-    if (usermessage.length > 1000) {
-        console.error('Message too long');
-        return;
-    }
-
-    if (usermessage.length < 1) {
-        console.error('Message too short');
-        return;
-    }
-    
-    // let link = usermessage.match(/(https?:\/\/[^\s]+)/g);
-    // if (link) {
-    //    usermessage = usermessage.replace(link[0], `<a href="${link[0]}" target="_blank">${link[0]}</a>`);
-    // }
-
-    document.getElementById('message-input').value = '';
 
     const cookie = document.cookie;
     const userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
