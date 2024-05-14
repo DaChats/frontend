@@ -201,7 +201,6 @@ async function sendMessage() {
 
 socket.on('message', (data) => {
     console.log('Received message:', data);
-    io.to(chatid).emit('message', data);
 
     const cookie = document.cookie;
     const userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
@@ -232,9 +231,14 @@ socket.on('message', (data) => {
     let html = `
     <div class="chat-message user2">
         <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
-        <p class="chat-text">${username}</p>
+        <p class="chat-text">${data.usermassege}</p>
     </div>
     `;
 
     messagesContainer.innerHTML += html;
+});
+
+socket.on('message', (data) => {
+    // console.log the data
+    console.log(data);
 });
