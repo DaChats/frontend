@@ -172,23 +172,23 @@ async function sendMessage() {
     });
 
     if (!usermessage) {
-        console.error('Missing message');
+        console.warn('Missing message');
         return;
     }
 
     if (usermessage.length > 1000) {
-        console.error('Message too long');
+        console.warn('Message too long');
         return;
     }
 
     if (usermessage.length < 1) {
-        console.error('Message too short');
+        console.warn('Message too short');
         return;
     }
 
     const htmlTag = usermessage.match(/<[^>]*>/g);
     if (htmlTag) {
-        console.error('HTML tag found');
+        console.warn('HTML tag found');
         return;
     }
 
