@@ -1,5 +1,22 @@
 let socket;
 
+const button = document.getElementById('send-btn');
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        button.click();
+
+        pressed = true;
+    }
+});
+
+setTimeout(() => {
+    if (pressed) {
+        pressed = false;
+        return;
+    }
+}, 700);
+
 async function getChats() {
     const cookie = document.cookie;
     const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
@@ -95,7 +112,7 @@ async function getChat(chatid) {
     let token = "";
     token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
 
-    const chat = await fetch(`https://api.dachats.online/api/chat?token=${token}&chatid=${chatid}`);
+    const chat = await fetch(`https://api.dachats.online/api/chat?token=${token}&chatid=${chatid}&limit=20`);
     const chatData = await chat.json();
 
     console.log(chatData);
@@ -162,14 +179,10 @@ async function getChat(chatid) {
     connectWS();
 }
 
+let pressed = false;
+
 async function sendMessage() {
     const usermessage = document.getElementById('message-input').value;
-    const button = document.getElementById('send-btn');
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            button.click();
-        }
-    });
 
     if (!usermessage) {
         console.warn('Missing message');
