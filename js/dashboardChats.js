@@ -105,7 +105,7 @@ async function getChat(chatid) {
         return;
     }
 
-    const chatMessages = chatData.data.messages;
+    const chatMessages = chatData.data[0].messages;
 
     console.log(chatMessages);
 
@@ -114,8 +114,11 @@ async function getChat(chatid) {
 
     messagesContainer.innerHTML = '';
 
-    const currentUser = chatData.data.members[0];
-    const friend = chatData.data.members[1];
+    const currentUser = chatData.data[0].members[0];
+    const friend = chatData.data[0].members[1];
+
+    console.log(currentUser);
+    console.log(friend);
 
     for (let i = 0; i < chatMessages.length; i++) {
         const message = chatMessages[i].message;
