@@ -7,7 +7,7 @@ async function checklogin() {
     const cookie = document.cookie;
     const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
     console.log(token);
-
+    
     if (token) {
         const getUserData = await fetch(`https://api.dachats.online/api/auth/login?token=${token}`, {
             method: 'GET',
@@ -30,13 +30,16 @@ async function checklogin() {
             document.cookie = 'userid=; path=/;'; 
             location.reload();
             return;
-        }
+        } 
+
+        div.innerHTML = ``
 
         const username = await userData.data.name;
         const avatar = await userData.data.avatar;
 
         console.log(username);
         console.log(avatar);
+
 
         div.innerHTML = `
         <div>
