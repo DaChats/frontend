@@ -187,16 +187,7 @@ async function getChat(chatid) {
         messagesContainer.innerHTML = html;
     }
 
-    async function connectWS() {
-        socket = io(`https://api.dachats.online?token=${token}&chaid=${chatid}`);
-        socket.on('connect', () => {
-            console.log('Connected to WS server.');
-        });
-
-        socket.emit('join', { chatid });
-    }
-
-    connectWS();
+    socket.emit('join', chatid);
 }
 
 let pressed = false;
@@ -265,57 +256,60 @@ async function sendMessage() {
     messagesContainer.innerHTML += html;
 }
 
-console.log(socket)
+document.addEventListener('DOMContentLoaded', function () {
+    socket = io(`https://api.dachats.online?token=${token}`);
 
-socket.on('message', (data) => {
-    console.log('Received message:', data);
-
-    const cookie = document.cookie;
-    const userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
-
-    console.log(data.from, data.message, data.time);
-
-    const user = fetch(`https://api.dachats.online/api/user/${data.from}`);
-    const userData = user.json();
-
-    console.log(userData);
-
-    if (userData.status != 200) {
-        console.error(userData.message);
-        return;
-    }
-
-    const username = userData.data.username;
-    const avatar = userData.data.avatar;
-    const id = userData.data.id;
-
-    if (id == userid) {
-        console.log('segg')
-        return;
-    }
-
-    const messagesContainer = document.getElementById('messages');
-
-    var urlRegex = /(https?:\/\/[^\s]+)/g;
-
-    var linkedMessage = data.usermessage.replace(urlRegex, function (url) {
-        return '<a href="' + url + '">' + url + '</a>';
+    socket.on('connect', () => {
+        console.log('Connected to WS server.');
     });
 
-    let html = `
-    <div class="chat-message user2">
-        <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
-        <p class="chat-text">${linkedMessage}</p>
-    </div>
-    `;
 
-    messagesContainer.innerHTML += html;
-});
+    socket.on('message', (data) => {
+        console.log('Received message:', data);
 
-socket.on('message', function (data) {
-    console.log('messagem: ' + data);
-});
+        const cookie = document.cookie;
+        const userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
 
-socket.on('disconnect', () => {
-    console.log('Disconnected from WS server.');
-});
+        console.log(data.from, data.message, data.time);
+
+        const user = fetch(`https://api.dachats.online/api/user/${data.from}`);
+        const userData = user.json();
+
+        console.log(userData);
+
+        if (userData.status != 200) {
+            console.error(userData.message);
+            return;
+        }
+
+        const username = userData.data.username;
+        const avatar = userData.data.avatar;
+        const id = userData.data.id;
+
+        if (id == userid) {
+            console.log('segg')
+            return;
+        }
+
+        const messagesContainer = document.getElementById('messages');
+
+        var urlRegex = /(https?:\/\/[^\s]+)/g;
+
+        var linkedMessage = data.usermessage.replace(urlRegex, function (url) {
+            return '<a href="' + url + '">' + url + '</a>';
+        });
+
+        let html = `
+        <div class="chat-message user2">
+            <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
+            <p class="chat-text">${linkedMessage}</p>
+        </div>
+        `;
+
+        messagesContainer.innerHTML += html;
+    });
+
+    socket.io.on('ping', () => {
+        console.log('Ping');
+    });
+})
