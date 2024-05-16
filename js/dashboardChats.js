@@ -2,7 +2,7 @@ let socket;
 
 const button = document.getElementById('send-btn');
 
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
     if (event.key === 'Enter') {
         button.click();
 
@@ -128,6 +128,7 @@ async function getChat(chatid) {
 
     let html = '';
     const messagesContainer = document.getElementById('messages');
+    const userinfo2 = document.getElementById('user2-info');
 
     messagesContainer.innerHTML = '';
 
@@ -137,14 +138,25 @@ async function getChat(chatid) {
     console.log(currentUser);
     console.log(friend);
 
+    userinfo2.innerHTML = `
+        <div class="chat-user" id="chat-user">
+            <img src="https://api.dachats.online/api/files?filename=${friend.avatar}" alt="user" class="chat-img">
+            <p class="chat-name">${friend.username}</p>
+        </div>
+
+        <button class="call-btn" type="button">
+            <img src="../images/call.svg" alt="call" class="call-img">
+        </button>
+    `;
+
     for (let i = 0; i < chatMessages.length; i++) {
         const message = chatMessages[i].message;
         const time = chatMessages[i].time;
         const from = chatMessages[i].from;
 
         var urlRegex = /(https?:\/\/[^\s]+)/g;
-    
-        var linkedMessage = message.replace(urlRegex, function(url) {
+
+        var linkedMessage = message.replace(urlRegex, function (url) {
             return '<a href="' + url + '">' + url + '</a>';
         });
 
@@ -230,8 +242,8 @@ async function sendMessage() {
     const avatar = userData.data.avatar;
 
     var urlRegex = /(https?:\/\/[^\s]+)/g;
-    
-    var linkedMessage = usermessage.replace(urlRegex, function(url) {
+
+    var linkedMessage = usermessage.replace(urlRegex, function (url) {
         return '<a href="' + url + '">' + url + '</a>';
     });
 
@@ -275,8 +287,8 @@ socket.on('message', (data) => {
     const messagesContainer = document.getElementById('messages');
 
     var urlRegex = /(https?:\/\/[^\s]+)/g;
-    
-    var linkedMessage = data.usermessage.replace(urlRegex, function(url) {
+
+    var linkedMessage = data.usermessage.replace(urlRegex, function (url) {
         return '<a href="' + url + '">' + url + '</a>';
     });
 
@@ -290,7 +302,7 @@ socket.on('message', (data) => {
     messagesContainer.innerHTML += html;
 });
 
-socket.on('message', function(data){
+socket.on('message', function (data) {
     console.log('messagem: ' + data);
 });
 
