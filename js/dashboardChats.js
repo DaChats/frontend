@@ -122,7 +122,7 @@ async function getChat(chatid) {
         return;
     }
 
-    const chatMessages = chatData.data[0].messages;
+    const chatMessages = chatData.data.messages;
 
     console.log(chatMessages);
 
@@ -136,8 +136,8 @@ async function getChat(chatid) {
         messagesContainer.innerHTML = html;
     }, 1000);
 
-    const currentUser = chatData.data[0].members[0];
-    const friend = chatData.data[0].members[1];
+    const currentUser = chatData.data.members[0];
+    const friend = chatData.data.members[1];
 
     console.log(currentUser);
     console.log(friend);
@@ -256,7 +256,7 @@ async function sendMessage() {
     });
 
     let html = `
-        <div class="chat-message">
+        <div class="chat-message user2">
             <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
             <p class="chat-text">${linkedMessage}</p>
         </div>
@@ -264,6 +264,8 @@ async function sendMessage() {
 
     messagesContainer.innerHTML += html;
 }
+
+console.log(socket)
 
 socket.on('message', (data) => {
     console.log('Received message:', data);
