@@ -40,7 +40,7 @@ async function register() {
         if (responseData.status == 200) {
             location.href = './verify.html';
         } else {
-            alert('Hiba történt a regisztráció során! (Rossz adatok!)');
+            alert(responseData.message);
             return;
         }
     } catch (error) {

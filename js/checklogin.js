@@ -24,6 +24,14 @@ async function checklogin() {
             return;
         }
 
+        if (userData.status !== 200) {
+            alert(userData.message);
+            document.cookie = 'token=; path=/;';
+            document.cookie = 'userid=; path=/;'; 
+            location.reload();
+            return;
+        }
+
         const username = await userData.data.name;
         const avatar = await userData.data.avatar;
 

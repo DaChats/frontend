@@ -34,7 +34,7 @@ async function checklogin() {
         const div = document.getElementById('user-info');
         div.innerHTML = `
         <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="user-img">
-
+        
         <div class="user-info">
             <p class="user-name">${username}</p>
             <p class="user-status">${status}</p>
