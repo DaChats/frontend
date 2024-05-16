@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    socket.on('message', (data) => {
+    socket.on('message', async (data) => {
         console.log('Received message:', data);
 
         const cookie = document.cookie;
@@ -275,8 +275,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         console.log(data.from, data.message, data.time);
 
-        const user = fetch(`https://api.dachats.online/api/user/${data.from}`);
-        const userData = user.json();
+        const user = await fetch(`https://api.dachats.online/api/user/${data.from}`);
+        const userData = await user.json();
 
         console.log(userData);
 
@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         let html = `
-        <div class="chat-message user2">
+        <div class="chat-message">
             <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
             <p class="chat-text">${linkedMessage}</p>
         </div>
