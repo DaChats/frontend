@@ -126,17 +126,23 @@ async function getChat(chatid) {
 
     console.log(chatMessages);
 
-    let html = '';
     const messagesContainer = document.getElementById('messages');
     const userinfo2 = document.getElementById('user2-info');
 
     messagesContainer.innerHTML = '';
+    let html = '<div class="animate-spin"></div>';
+
+    setTimeout(() => {
+        messagesContainer.innerHTML = html;
+    }, 1000);
 
     const currentUser = chatData.data[0].members[0];
     const friend = chatData.data[0].members[1];
 
     console.log(currentUser);
     console.log(friend);
+
+    userinfo2.innerHTML = ""
 
     userinfo2.innerHTML = `
         <div class="chat-user" id="chat-user">
@@ -148,6 +154,8 @@ async function getChat(chatid) {
             <img src="../images/call.svg" alt="call" class="call-img">
         </button>
     `;
+
+    messagesContainer.innerHTML = '';
 
     for (let i = 0; i < chatMessages.length; i++) {
         const message = chatMessages[i].message;
