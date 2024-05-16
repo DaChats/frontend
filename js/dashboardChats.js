@@ -137,8 +137,8 @@ async function getChat(chatid) {
         messagesContainer.innerHTML = html;
     }, 1000);
 
-    const friend = chatData.data.members[0];
-    const currentUser = chatData.data.members[1];
+    const currentUser = chatData.data.members[0];
+    const friend = chatData.data.members[1];
 
     console.log(currentUser);
     console.log(friend);
@@ -187,6 +187,13 @@ async function getChat(chatid) {
 
         messagesContainer.innerHTML = html;
     }
+
+    function scrollToBottom() {
+        var container = document.getElementById("messages");
+        messagesContainer.scrollTop = container.scrollHeight;
+    }
+
+    scrollToBottom();
 
     socket.emit('join', chatid);
 
@@ -257,6 +264,13 @@ async function sendMessage() {
     `;
 
     messagesContainer.innerHTML += html;
+
+    function scrollToBottom() {
+        var container = document.getElementById("messages");
+        messagesContainer.scrollTop = container.scrollHeight;
+    }
+
+    scrollToBottom();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -273,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const cookie = document.cookie;
         const userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
 
-        console.log(data.from, data.message, data.time);
+        console.log(data.from, data.usermessage, data.time);
 
         const user = await fetch(`https://api.dachats.online/api/user/${data.from}`);
         const userData = await user.json();
@@ -285,14 +299,29 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        const username = userData.data.username;
         const avatar = userData.data.avatar;
         const id = userData.data.id;
+        const username = userData.data.username;
 
         if (id == userid) {
             console.log('segg')
             return;
         }
+
+        Notification.requestPermission().then(function (result) {
+            console.log(result);
+
+            if (result == 'granted') {
+                const notification = new Notification('Új üzenet', {
+                    body: `${username} Üzenetet küldött: ${data.usermessage}`,
+                    icon: 'https://api.dachats.online/api/files?filename=logo.png'
+                });
+
+                notification.onclick = () => {
+                    window.focus();
+                }
+            }
+        });
 
         const messagesContainer = document.getElementById('messages');
 
@@ -310,6 +339,13 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
 
         messagesContainer.innerHTML += html;
+
+        function scrollToBottom() {
+            var container = document.getElementById("messages");
+            messagesContainer.scrollTop = container.scrollHeight;
+        }
+    
+        scrollToBottom();
     });
 
     socket.io.on('ping', () => {
