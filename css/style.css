@@ -30,6 +30,14 @@
   color: #fff;
 }
 
+.usermenu:hover > ul.dropdown-menu {
+  display: none !important;
+}
+
+.usermenu:hover > ul.dropdown-menu.show {
+  display: block !important;
+}
+
 .custom-toggle-arrow {
   font-size: 18px;
   margin-top: 1px;
