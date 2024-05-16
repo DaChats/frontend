@@ -137,8 +137,8 @@ async function getChat(chatid) {
         messagesContainer.innerHTML = html;
     }, 1000);
 
-    const currentUser = chatData.data.members[0];
-    const friend = chatData.data.members[1];
+    const friend = chatData.data.members[0];
+    const currentUser = chatData.data.members[1];
 
     console.log(currentUser);
     console.log(friend);
@@ -250,7 +250,7 @@ async function sendMessage() {
     });
 
     let html = `
-        <div class="chat-message user2">
+        <div class="chat-message">
             <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
             <p class="chat-text">${linkedMessage}</p>
         </div>
@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         let html = `
-        <div class="chat-message">
+        <div class="chat-message user2">
             <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
             <p class="chat-text">${linkedMessage}</p>
         </div>
