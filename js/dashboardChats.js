@@ -1,4 +1,5 @@
 let socket;
+let currentChatId;
 
 const button = document.getElementById('send-btn');
 
@@ -188,6 +189,8 @@ async function getChat(chatid) {
     }
 
     socket.emit('join', chatid);
+
+    currentChatId = chatid;
 }
 
 let pressed = false;
@@ -223,7 +226,7 @@ async function sendMessage() {
 
     const time = new Date().toLocaleTimeString();
     const from = userid;
-    const data = { usermessage, time, from };
+    const data = { usermessage, time, from, chatid: currentChatId };
     socket.emit('message', data);
 
     const messagesContainer = document.getElementById('messages');
