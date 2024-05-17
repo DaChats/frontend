@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const username = userData.data.username;
 
         if (id == userid) {
-            console.log('Own message');
+            console.log('segg');
             return;
         }
 
