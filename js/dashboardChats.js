@@ -280,7 +280,6 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('Connected to WS server.');
     });
 
-
     socket.on('message', async (data) => {
         console.log('Received message:', data);
 
@@ -304,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const username = userData.data.username;
 
         if (id == userid) {
-            console.log('segg')
+            console.log('Own message');
             return;
         }
 
@@ -320,10 +319,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 notification.onclick = () => {
                     window.focus();
                 }
+
+                const audio = new Audio('../sounds/notify.wav');
+                audio.play();
             }
         });
 
         const messagesContainer = document.getElementById('messages');
+
+        const isAtBottom = messagesContainer.scrollHeight - messagesContainer.scrollTop === messagesContainer.clientHeight;
 
         var urlRegex = /(https?:\/\/[^\s]+)/g;
 
@@ -340,15 +344,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         messagesContainer.innerHTML += html;
 
-        function scrollToBottom() {
-            var container = document.getElementById("messages");
-            messagesContainer.scrollTop = container.scrollHeight;
+        if (isAtBottom) {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
-    
-        scrollToBottom();
     });
 
     socket.io.on('ping', () => {
         console.log('Ping');
     });
-})
+});
+
+function scrollToBottom() {
+    const container = document.getElementById("messages");
+    container.scrollTop = container.scrollHeight;
+}
