@@ -42,36 +42,28 @@ async function getChats() {
     const div = document.getElementById('chats');
     let html = '';
 
+    const chats = await fetch(`https://api.dachats.online/api/chats?token=${token}`);
+    const chatsData = await chats.json();
+    console.log(chatsData)
+
+    if (chatsData.status != 200) {
+        console.error(chatsData.message);
+        return;
+    }
+
+    const chatList = chatsData.data;
+    let chatid;
+
     for (let i = 0; i < friendsList.length; i++) {
-        const friendid = friendsList[i];
+        const friendid = friendsList[i].id;
 
-        const friend = await fetch(`https://api.dachats.online/api/user/${friendid}`);
-        const friendData = await friend.json();
-
-        if (friendData.status != 200) {
-            console.error(friendData.message);
-            return;
-        }
-
-        const friendUsername = friendData.data.username;
-        const friendavatar = friendData.data.avatar;
-        const friendstatus = friendData.data.status;
+        const friendUsername = friendsList[i].username;
+        const friendavatar = friendsList[i].avatar;
+        const friendstatus = friendsList[i].status;
 
         console.log(friendUsername);
         console.log(friendavatar);
         console.log(friendstatus);
-
-        const chats = await fetch(`https://api.dachats.online/api/chats?token=${token}`);
-        const chatsData = await chats.json();
-        console.log(chatsData)
-
-        if (chatsData.status != 200) {
-            console.error(chatsData.message);
-            return;
-        }
-
-        const chatList = chatsData.data;
-        let chatid = '';
 
         for (let i = 0; i < chatList.length; i++) {
             if (chatList[i].members.includes(friendid)) {
