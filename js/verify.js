@@ -37,7 +37,7 @@ async function verify() {
     }
 }
 
-async function ide() {
+function ide() {
     alert('Nem...')
     return;
 }
