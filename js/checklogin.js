@@ -20,7 +20,7 @@ async function checklogin() {
         console.log(userData);
 
         if (!userData) {
-            alert('Hiba történt a bejelentkezés során!');
+            alert(userData.message);
             return;
         }
 

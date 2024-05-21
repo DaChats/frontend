@@ -15,14 +15,14 @@ async function checklogin() {
             }
         })
 
+        const userData = await getUserData.json();
+        console.log(userData);
+
         if (!getUserData.ok) {
-            alert('Hiba történt a bejelentkezés során!');
+            alert(userData.message);
             window.location.href = '../login.html';
             return;
         }
-
-        const userData = await getUserData.json();
-        console.log(userData);
 
         const username = await userData.data.name;
         const avatar = await userData.data.avatar;

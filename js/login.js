@@ -38,14 +38,14 @@ async function login() {
             body: JSON.stringify(loginData)
         });
 
-        if (!loginResponse.ok) {
-            alert('Hiba történt a bejelentkezés során! (Szerver nem elérhető!)');
-            return;
-        }
-
         const responseData = await loginResponse.json();
         console.log(responseData);
         const token = responseData.token;
+
+        if (!loginResponse.ok) {
+            alert(responseData.message);
+            return;
+        }
 
         const logging = await fetch(`https://api.dachats.online/api/auth/login?token=${token}`);
 
@@ -67,7 +67,7 @@ async function login() {
             console.log('Token added to cookie');
             location.href = './index.html';
         } else {
-            alert('Hiba történt a bejelentkezés során! (Rossz adatok!)');
+            alert(responseData.message);
             return;
         }
     } catch (error) {

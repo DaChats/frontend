@@ -29,13 +29,13 @@ async function register() {
             body: JSON.stringify(registerData)
         });
 
-        if (!registerResponse.ok) {
-            alert('Hiba történt a regisztráció során! (Szerver nem elérhető!)');
-            return;
-        }
-
         const responseData = await registerResponse.json();
         console.log(responseData);
+
+        if (!registerResponse.ok) {
+            alert(responseData.message);
+            return;
+        }
 
         if (responseData.status == 200) {
             location.href = './verify.html';
