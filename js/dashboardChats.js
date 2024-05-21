@@ -272,6 +272,10 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('Connected to WS server.');
     });
 
+    socket.on('notify', (data) => {
+        console.log('Received notify:', data);
+    })
+
     socket.on('message', async (data) => {
         console.log('Received message:', data);
 
