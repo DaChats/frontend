@@ -265,19 +265,33 @@ async function sendMessage() {
     scrollToBottom();
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    socket = io(`https://api.dachats.online?token=${token}`);
+const cookie = document.cookie;
+const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
 
+async function connectWS() {
+    socket = await io(`https://api.dachats.online?token=${token}`);
+}
+
+connectWS();
+
+document.addEventListener('DOMContentLoaded', function () {
     socket.on('connect', () => {
         console.log('Connected to WS server.');
     });
 
     socket.on('notify', (data) => {
         console.log('Received notify:', data);
+
+        // Notifikáció kezelése
     })
 
     socket.on('message', async (data) => {
         console.log('Received message:', data);
+
+        if (data.chatid !== currentChatId) {
+            console.log('segg2');
+            return;
+        }
 
         const cookie = document.cookie;
         const userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
