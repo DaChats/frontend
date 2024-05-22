@@ -282,7 +282,33 @@ document.addEventListener('DOMContentLoaded', function () {
     socket.on('notify', (data) => {
         console.log('Received notify:', data);
 
-        // Notifikáció kezelése
+        Notification.requestPermission().then(async function (result) {
+            console.log(result);
+
+            const user = await fetch(`https://api.dachats.online/api/user/${data.from}`);
+            const userData = await user.json();
+
+            if (userData.status != 200) {
+                console.log('caca')
+                return;
+            }
+
+            const username = userData.data.username;
+
+            if (result == 'granted') {
+                const notification = new Notification('Új üzenet', {
+                    body: `${username} Üzenetet küldött: ${data.usermessage}`,
+                    icon: 'https://api.dachats.online/api/files?filename=logo.png'
+                });
+
+                notification.onclick = () => {
+                    window.focus();
+                }
+
+                const audio = new Audio('../sounds/notify.wav');
+                audio.play();
+            }
+        });
     })
 
     socket.on('message', async (data) => {
@@ -310,30 +336,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const avatar = userData.data.avatar;
         const id = userData.data.id;
-        const username = userData.data.username;
 
         if (id == userid) {
             console.log('segg');
             return;
         }
-
-        Notification.requestPermission().then(function (result) {
-            console.log(result);
-
-            if (result == 'granted') {
-                const notification = new Notification('Új üzenet', {
-                    body: `${username} Üzenetet küldött: ${data.usermessage}`,
-                    icon: 'https://api.dachats.online/api/files?filename=logo.png'
-                });
-
-                notification.onclick = () => {
-                    window.focus();
-                }
-
-                const audio = new Audio('../sounds/notify.wav');
-                audio.play();
-            }
-        });
 
         const messagesContainer = document.getElementById('messages');
 
