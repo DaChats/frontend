@@ -22,7 +22,7 @@ async function verify() {
         const responseData = await verifyResponse.json();
         console.log(responseData);
 
-        if (responseData.status == 200) {            
+        if (responseData.status == 200) {
             const token = responseData.data.token;
             const Mainap = new Date();
             Mainap.setDate(Mainap.getDate() + 14);
