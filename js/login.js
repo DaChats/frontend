@@ -61,11 +61,16 @@ async function login() {
         const userData = await logging.json();
 
         if (userData.status == 200) {
-            const Mainap = new Date();
-            Mainap.setDate(Mainap.getDate() + 14);
-            document.cookie = `token=${token}; expires=${Mainap.toUTCString()}; path=/;`;
-            console.log('Token added to cookie');
-            location.href = './index.html';
+            if (userData.data.twofa) {
+                localStorage.setItem('token', token);
+                console.log('Token set....')
+                location.href = './2fa.html';
+            } else {
+                const Mainap = new Date();
+                Mainap.setDate(Mainap.getDate() + 14);
+                document.cookie = `token=${token}; path=/; expires=${Mainap.toUTCString()};`;
+                location.href = './index.html';
+            }
         } else {
             alert(responseData.message);
             return;
