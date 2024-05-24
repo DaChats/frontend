@@ -66,9 +66,9 @@ async function checklogin() {
                     <a class="nav-link" class="mt-2"><img src="../../images/pp.png" alt="avatar" class="mt-3"></a>
                 </div>
                 <div class="row m-3">
-                    <div class="col-4"><h6>Megjelenített Név</h6><p>${username}</p></div>
-                    <div class="col-4"><h6>E-mail</h6><p>${email}</p></div>
-                    <div class="col-4"><h6>Felhasználó Azonosító</h6><p>${id}</p></div>
+                    <div class="col-xl-4 col-md-6 col-12 my-3"><h6>Megjelenített Név</h6><p>${username}</p></div>
+                    <div class="col-xl-4 col-md-6 col-12 my-3"><h6>E-mail</h6><p>${email}</p></div>
+                    <div class="col-xl-4 col-md-6 col-12 my-3"><h6>Felhasználó Azonosító</h6><p>${id}</p></div>
                 </div>
         `;
 
