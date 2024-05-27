@@ -1,12 +1,9 @@
 console.log('checklogin.js loaded');
-
 async function checklogin() {
     console.log('checklogin() called');
-
     const cookie = document.cookie;
     const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
     console.log(token);
-
     if (token) {
         const getUserData = await fetch(`https://api.dachats.online/api/auth/login?token=${token}`, {
             method: 'GET',
@@ -14,16 +11,13 @@ async function checklogin() {
                 'Content-Type': 'application/json',
             }
         })
-
         const userData = await getUserData.json();
         console.log(userData);
-
         if (!getUserData.ok) {
             alert(userData.message);
             window.location.href = '../login.html';
             return;
         }
-
         const username = await userData.data.name;
         const avatar = await userData.data.avatar;
         const email = await userData.data.email;
@@ -53,18 +47,7 @@ async function checklogin() {
             button.addEventListener('click', async () => {
                 const disable2fa = await fetch(`https://api.dachats.online/api/2fa?token=${token}&remove=true`, {
                     method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-
-                const disable2faData = await disable2fa.json();
-                console.log(disable2faData);
-
-                if (disable2faData.status === 200) {
-                    alert('2FA sikeresen kikapcsolva');
-                    window.location.reload();
-                }
+                });
             });
         } else {
             button.innerText = 'Bekapcsolás';
@@ -75,5 +58,4 @@ async function checklogin() {
         return;
     }
 }
-
 checklogin();
