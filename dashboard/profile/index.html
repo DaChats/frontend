@@ -19,10 +19,9 @@
     <script src="../../js/checkloginprofile.js"></script>
 </head>
 
-<body class="Gotham" data-bs-theme="dark" style="height: 100%; background-color: #252525;"
-    onload="karbantartas('../../karbantartas/index.html')">
+<body class="Gotham" data-bs-theme="dark" style="height: 100%; background-color: #252525;">
     <nav class="main-nav">
-        <a href="../../index.html"><img src="../../images/image4.png" alt="logo" class="logo" onclick="openPopup('avatar')"></a>
+        <a class="nav-link" href="../../index.html"><img src="../../images/image4.png" alt="logo" class="logo"></a>
 
         <div class="hamburger" onclick="openSidebar()">
             <div class="line"></div>
@@ -32,12 +31,11 @@
     </nav>
     <div>
         <div class="text-end m-3">
-            <a class="nav-link" href="../../dashboard/index.html" class="mt-2"><img class="" src="../../images/x.png"
-                    alt=""></a>
+            <a href="../../dashboard/index.html" class="mt-2"><img src="../../images/x.png" alt=""></a>
         </div>
         <h1 class="text-center my-5">Saját fiók</h1>
         <div class="fieldset1 col-11 col-xl-8 col-xxl-6 col-md-10" id="profile">
-            <button id="openPopupButton" onclick="openPopup('2fa')" class="btn btn-primary"></button>
+
         </div>
     </div>
 
@@ -49,7 +47,6 @@
         </div>
     </div>
     <script src="../../js/2fa.js"></script>
-    <script src="../../js/karbantartas.js"></script>
     <script src="../../js/popup.js"></script>
 </body>
 
