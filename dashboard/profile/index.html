@@ -37,15 +37,13 @@
         </div>
         <h1 class="text-center my-5">Saját fiók</h1>
         <div class="fieldset1 col-11 col-xl-8 col-xxl-6 col-md-10" id="profile">
-            
+            <button id="openPopupButton" onclick="openPopup('2fa')" class="btn btn-primary"></button>
         </div>
-
-        <button id="openPopupButton" class="btn btn-primary"></button>
     </div>
 
     <div class="popup-overlay">
         <div class="popup">
-            <button class="close-popup">X</button>
+            <button class="close-popup" onclick="closePopup()">X</button>
             <div id="2fa" class="text-center">
             </div>
         </div>

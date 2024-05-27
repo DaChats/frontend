@@ -77,7 +77,3 @@ async function twofa() {
         console.log('Failed to fetch data')
     }
 }
-
-if (document.getElementById('2fa')) {
-    twofa();
-}
