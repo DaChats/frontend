@@ -3,7 +3,7 @@ async function userkerese(kereses) {
     console.log(kereses);
 
     if (kereses.length < 1) {
-        console.log('így nehéz lesz..')
+        console.log('így nehéz lesz..');
         return;
     }
 
@@ -13,39 +13,39 @@ async function userkerese(kereses) {
     const userid = useridCookie ? useridCookie.split('=')[1] : null;
     console.log(userid);
 
-    const friends = await fetch(`https://api.dachats.online/api/friends?token=${token}`, {
+    const friendsResponse = await fetch(`https://api.dachats.online/api/friends?token=${token}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
-    })
+    });
 
-    const friendsData = await friends.json();
-
+    const friendsData = await friendsResponse.json();
     console.log(friendsData);
 
-    const users = await fetch('https://api.dachats.online/api/users', {
+    const usersResponse = await fetch('https://api.dachats.online/api/users', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         }
-    })
+    });
 
-    if (users.status == 200) {
-        const userData = await users.json();
-        console.log(userData);
+    if (usersResponse.status == 200) {
+        const usersData = await usersResponse.json();
+        console.log(usersData);
 
-        if (userData && userData.users && userData.users.length > 0) {
-            const filteredUsers = userData.users.filter(user => user.username.includes(kereses));
+        if (usersData && usersData.users && usersData.users.length > 0) {
+            const filteredUsers = usersData.users.filter(user => user.username.includes(kereses));
 
-            console.log(filteredUsers)
+            console.log(filteredUsers);
 
             const container = document.getElementById('users');
             container.innerHTML = '';
 
             filteredUsers.forEach(user => {
-                const friendAction = friendsData.data && friendsData.data.includes(user.id) ? `removefriend('${user.id}')` : `addfriend('${user.id}')`;
-                const friendActionIcon = friendsData.data && friendsData.data.includes(user.id) ? 'gomb.png' : 'gomb(1).png';
+                const isFriend = friendsData.data.some(friend => friend.id === user.id);
+                const friendAction = isFriend ? `removefriend('${user.id}')` : `addfriend('${user.id}')`;
+                const friendActionIcon = isFriend ? 'gomb.png' : 'gomb(1).png';
 
                 const userDiv = document.createElement('div');
                 userDiv.innerHTML = `
