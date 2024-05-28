@@ -213,7 +213,7 @@ async function sendMessage() {
     }
 
     if (usermessage.trim().length < 1) {
-        console.error('Message too short');
+        console.warn('Message too short');
         return;
     }
 
