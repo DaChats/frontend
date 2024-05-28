@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!token) {
         alert('Nem vagy bejelentkezve!');
-        location.href = './login.html';
+        location.href = './index.html';
     }
 });
 
@@ -38,7 +38,7 @@ async function verify() {
             const Mainap = new Date();
             Mainap.setDate(Mainap.getDate() + 14);
             document.cookie = `token=${token}; path=/; expires=${Mainap.toUTCString()};`;
-            location.href = './index.html';
+            location.href = './dashboard/index.html';
         } else {
             alert('Hiba történt a hitelesítés során! (Rossz kód!)');
             return;
