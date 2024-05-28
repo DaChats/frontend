@@ -9,7 +9,7 @@ const getTokenFromCookie = () => {
 const redirectIfLoggedIn = () => {
     const token = getTokenFromCookie();
     if (token) {
-        location.href = './index.html';
+        location.href = './dashboard/index.html';
     }
 };
 
@@ -69,7 +69,7 @@ async function login() {
                 const Mainap = new Date();
                 Mainap.setDate(Mainap.getDate() + 14);
                 document.cookie = `token=${token}; path=/; expires=${Mainap.toUTCString()};`;
-                location.href = './index.html';
+                location.href = './dashboard/index.html';
             }
         } else {
             alert(responseData.message);
