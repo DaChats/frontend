@@ -212,6 +212,11 @@ async function sendMessage() {
         return;
     }
 
+    if (usermessage.trim().length < 1) {
+        console.error('Message too short');
+        return;
+    }
+
     const htmlTag = usermessage.match(/<[^>]*>/g);
     if (htmlTag) {
         console.warn('HTML tag found');
