@@ -21,7 +21,7 @@ async function checklogin() {
 
             if (!getUserData.ok) {
                 alert(userData.message);
-                window.location.href = '../login.html';
+                window.location.href = '../index.html';
                 return;
             }
             let status;
@@ -43,7 +43,7 @@ async function checklogin() {
         </div>`;
         }, 1000);
     } else {
-        window.location.href = '../login.html';
+        window.location.href = '../index.html';
         return;
     }
 }
