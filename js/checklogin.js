@@ -45,7 +45,7 @@ async function checklogin() {
         <div>
             <li class="nav-item dropdown usermenu" style="list-style-type: none; ">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img style="border-radius: 360px; width: 40px; height: 40px; gap: 100px;" src="https://api.dachats.online/api/files?filename=${avatar}" alt="">
+                    <img style="border-radius: 360px; width: 40px; height: 40px; gap: 100px; object-fit: cover;" src="https://api.dachats.online/api/files?filename=${avatar}" alt="">
                     <span style="font-size: 120%; color: white; padding: 15px;">${username}</span>
                 </a>
                 <ul class="dropdown-menu">

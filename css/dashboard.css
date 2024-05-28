@@ -90,6 +90,7 @@ button {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .chat-messages .chat-message .chat-text {
@@ -179,6 +180,7 @@ button {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .chat:hover {
@@ -265,6 +267,7 @@ button {
     width: 30px;
     height: 30px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .hamburger {
