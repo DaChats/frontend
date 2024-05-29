@@ -2,8 +2,15 @@ let socket;
 let currentChatId;
 let lastMessageId;
 let moreMessages = true
+let lastDate = '';
 
 const button = document.getElementById('send-btn');
+
+function formatDate(date) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(date).toLocaleDateString(undefined, options);
+}
+
 
 document.addEventListener('keydown', function (event) {
     if (event.key === 'Enter') {
@@ -128,7 +135,7 @@ async function getChat(chatid) {
     const userinfo2 = document.getElementById('user2-info');
 
     messagesContainer.innerHTML = '';
-    let html = ''
+    let html = '';
 
     const currentUser = chatData.data.members[0];
     const friend = chatData.data.members[1];
@@ -144,7 +151,7 @@ async function getChat(chatid) {
             <p class="chat-name">${friend.username}</p>
         </div>
 
-        <button class="call-btn" type="button">
+        <button class="call-btn" type="button" onclick="voiceCall('${chatid}')">
             <img src="../images/call.svg" alt="call" class="call-img">
         </button>
     `;
@@ -155,6 +162,20 @@ async function getChat(chatid) {
         const message = chatMessages[i].message;
         const time = chatMessages[i].time;
         const from = chatMessages[i].from;
+        const MessageTime = chatMessages[i].createdAt;
+        const messageDate = new Date(MessageTime).toDateString();
+
+        console.log('Message date:', messageDate);
+        console.log('Last date:', lastDate);
+
+        if (messageDate !== lastDate) {
+            console.log('Creating date separator...');
+            const dateSeparator = document.createElement('div');
+            dateSeparator.classList.add('chat-date-separator');
+            dateSeparator.innerHTML = `<span>${formatDate(lastDate)}</span>`;
+            messagesContainer.appendChild(dateSeparator);
+            lastDate = messageDate;
+        }
 
         var urlRegex = /(https?:\/\/[^\s]+)/g;
 
@@ -179,9 +200,9 @@ async function getChat(chatid) {
                 </div>
             `;
         }
-
-        messagesContainer.innerHTML = html;
     }
+
+    messagesContainer.innerHTML = html;
 
     function scrollToBottom() {
         var container = document.getElementById("messages");
@@ -262,6 +283,7 @@ async function sendMessage() {
         <div class="chat-message">
             <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
             <p class="chat-text">${linkedMessage}</p>
+            <p class="chat-time">${time}</p>
         </div>
     `;
 
@@ -366,6 +388,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="chat-message user2">
             <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
             <p class="chat-text">${linkedMessage}</p>
+            <p class="chat-time">${data.time}</p>
         </div>
         `;
 
@@ -405,9 +428,9 @@ document.querySelector('#messages').addEventListener('scroll', async function ()
     const messagesContainer = document.getElementById('messages');
 
     if (messagesContainer.scrollTop === 0 && moreMessages && !isFetchingMessages) {
-        isFetchingMessages = true; // Prevent further fetches until this one completes
+        isFetchingMessages = true;
         console.log('Fetching more messages...');
-        
+
         const chatData = await fetchMoreMessages();
 
         if (!chatData) {
@@ -416,6 +439,7 @@ document.querySelector('#messages').addEventListener('scroll', async function ()
         }
 
         const chatMessages = chatData.messages;
+
         console.log('Fetched messages:', chatMessages);
 
         const currentUser = chatData.members[0];
@@ -425,6 +449,21 @@ document.querySelector('#messages').addEventListener('scroll', async function ()
         chatMessages.reverse().forEach(message => {
             const messageElement = document.createElement('div');
             messageElement.classList.add('chat-message');
+            const MessageTime = message.createdAt;
+            const messageDate = new Date(MessageTime).toDateString();
+
+            console.log('Message date:', messageDate);
+            console.log('Last date:', lastDate);
+
+            if (messageDate !== lastDate) {
+                console.log('Creating date separator...');
+                const dateSeparator = document.createElement('div');
+                dateSeparator.classList.add('chat-date-separator');
+                dateSeparator.innerHTML = `<span>${formatDate(lastDate)}</span>`;
+                fragment.insertBefore(dateSeparator, fragment.firstChild);
+                lastDate = messageDate;
+            }
+
             if (message.from !== currentUser.id) {
                 messageElement.classList.add('user2');
                 messageElement.innerHTML = `
@@ -445,10 +484,9 @@ document.querySelector('#messages').addEventListener('scroll', async function ()
         messagesContainer.insertBefore(fragment, messagesContainer.firstChild);
         lastMessageId = chatMessages[chatMessages.length - 1]._id;
 
-        // Add a delay before allowing another fetch
         setTimeout(() => {
             isFetchingMessages = false;
-        }, 500); // Adjust the delay as necessary (500 milliseconds in this case)
+        }, 500);
     }
 });
 
