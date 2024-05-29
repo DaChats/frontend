@@ -166,6 +166,7 @@ async function getChat(chatid) {
                 <div class="chat-message">
                     <img src="https://api.dachats.online/api/files?filename=${currentUser.avatar}" alt="user" class="chat-img">
                     <p class="chat-text">${linkedMessage}</p>
+                    <p class="chat-time">${time}</p>
                 </div>
             `;
         } else {
@@ -173,6 +174,7 @@ async function getChat(chatid) {
                 <div class="chat-message user2">
                     <img src="https://api.dachats.online/api/files?filename=${friend.avatar}" alt="user" class="chat-img">
                     <p class="chat-text">${linkedMessage}</p>
+                    <p class="chat-time">${time}</p>
                 </div>
             `;
         }

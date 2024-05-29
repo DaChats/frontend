@@ -78,12 +78,12 @@ button {
     display: flex;
     gap: 10px;
     flex-direction: row-reverse;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .chat-message.user2 {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .chat-messages .chat-message img {
@@ -358,4 +358,9 @@ button {
     to {
         transform: rotate(360deg);
     }
+}
+
+.chat-time {
+    font-size: 12px;
+    color: #ffffff54;
 }
