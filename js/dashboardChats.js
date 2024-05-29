@@ -1,5 +1,7 @@
 let socket;
 let currentChatId;
+let lastMessageId;
+let moreMessages = true
 
 const button = document.getElementById('send-btn');
 
@@ -93,6 +95,9 @@ async function getChat(chatid) {
     console.log('getChat() called');
     console.log(chatid);
 
+    currentMessages = [];
+    moreMessages = true;
+
     const chatElements = document.querySelectorAll('.chat');
     chatElements.forEach(element => {
         element.classList.remove("active");
@@ -123,11 +128,7 @@ async function getChat(chatid) {
     const userinfo2 = document.getElementById('user2-info');
 
     messagesContainer.innerHTML = '';
-    let html = '<div class="animate-spin"></div>';
-
-    setTimeout(() => {
-        messagesContainer.innerHTML = html;
-    }, 1000);
+    let html = ''
 
     const currentUser = chatData.data.members[0];
     const friend = chatData.data.members[1];
@@ -192,6 +193,8 @@ async function getChat(chatid) {
     socket.emit('join', chatid);
 
     currentChatId = chatid;
+
+    lastMessageId = chatMessages[0]._id;
 }
 
 let pressed = false;
@@ -377,6 +380,78 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('Ping');
     });
 });
+
+async function fetchMoreMessages() {
+    const chat = await fetch(`https://api.dachats.online/api/chat?token=${token}&chatid=${currentChatId}&limit=20&beforeId=${lastMessageId}`);
+
+    const chatData = await chat.json();
+
+    if (chatData.status != 200) {
+        console.error(chatData.message);
+        return;
+    }
+
+    if (chatData.data.messages.length < 1) {
+        moreMessages = false;
+        return
+    }
+
+    return chatData.data
+}
+
+let isFetchingMessages = false;
+
+document.querySelector('#messages').addEventListener('scroll', async function () {
+    const messagesContainer = document.getElementById('messages');
+
+    if (messagesContainer.scrollTop === 0 && moreMessages && !isFetchingMessages) {
+        isFetchingMessages = true; // Prevent further fetches until this one completes
+        console.log('Fetching more messages...');
+        
+        const chatData = await fetchMoreMessages();
+
+        if (!chatData) {
+            isFetchingMessages = false;
+            return;
+        }
+
+        const chatMessages = chatData.messages;
+        console.log('Fetched messages:', chatMessages);
+
+        const currentUser = chatData.members[0];
+        const friend = chatData.members[1];
+
+        const fragment = document.createDocumentFragment();
+        chatMessages.reverse().forEach(message => {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('chat-message');
+            if (message.from !== currentUser.id) {
+                messageElement.classList.add('user2');
+                messageElement.innerHTML = `
+                    <img src="https://api.dachats.online/api/files?filename=${friend.avatar}" alt="user" class="chat-img">
+                    <p class="chat-text">${message.message.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1">$1</a>')}</p>
+                    <p class="chat-time">${message.time}</p>
+                `;
+            } else {
+                messageElement.innerHTML = `
+                    <img src="https://api.dachats.online/api/files?filename=${currentUser.avatar}" alt="user" class="chat-img">
+                    <p class="chat-text">${message.message.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1">$1</a>')}</p>
+                    <p class="chat-time">${message.time}</p>
+                `;
+            }
+            fragment.insertBefore(messageElement, fragment.firstChild);
+        });
+
+        messagesContainer.insertBefore(fragment, messagesContainer.firstChild);
+        lastMessageId = chatMessages[chatMessages.length - 1]._id;
+
+        // Add a delay before allowing another fetch
+        setTimeout(() => {
+            isFetchingMessages = false;
+        }, 500); // Adjust the delay as necessary (500 milliseconds in this case)
+    }
+});
+
 
 function scrollToBottom() {
     const container = document.getElementById("messages");
