@@ -2,7 +2,8 @@ let socket;
 let currentChatId;
 let lastMessageId;
 let moreMessages = true
-let lastDate = '';
+let currentDate = new Date().toDateString();
+let lastMessageDate = null;
 
 const button = document.getElementById('send-btn');
 
@@ -164,25 +165,22 @@ async function getChat(chatid) {
         const from = chatMessages[i].from;
         const MessageTime = chatMessages[i].createdAt;
         const messageDate = new Date(MessageTime).toDateString();
-
         console.log('Message date:', messageDate);
-        console.log('Last date:', lastDate);
-
-        if (messageDate !== lastDate) {
+    
+        if (messageDate !== lastMessageDate) {
             console.log('Creating date separator...');
-            const dateSeparator = document.createElement('div');
-            dateSeparator.classList.add('chat-date-separator');
-            dateSeparator.innerHTML = `<span>${formatDate(lastDate)}</span>`;
-            messagesContainer.appendChild(dateSeparator);
-            lastDate = messageDate;
+            lastMessageDate = messageDate;
+            const newMessageDate = new Date(new Date(MessageTime).getTime() + 24 * 60 * 60 * 1000).toDateString();
+    
+            messagesContainer.innerHTML += `<div class="chat-date-separator"><span>${formatDate(new Date(newMessageDate))}</span></div>`;
         }
-
+    
         var urlRegex = /(https?:\/\/[^\s]+)/g;
-
+    
         var linkedMessage = message.replace(urlRegex, function (url) {
             return '<a href="' + url + '">' + url + '</a>';
         });
-
+    
         if (from === currentUser.id) {
             html += `
                 <div class="chat-message">
@@ -200,7 +198,7 @@ async function getChat(chatid) {
                 </div>
             `;
         }
-    }
+    }    
 
     messagesContainer.innerHTML = html;
 
@@ -451,17 +449,17 @@ document.querySelector('#messages').addEventListener('scroll', async function ()
             messageElement.classList.add('chat-message');
             const MessageTime = message.createdAt;
             const messageDate = new Date(MessageTime).toDateString();
-
             console.log('Message date:', messageDate);
-            console.log('Last date:', lastDate);
 
-            if (messageDate !== lastDate) {
+            if (messageDate !== lastMessageDate) {
                 console.log('Creating date separator...');
+                lastMessageDate = messageDate;
+                const newMessageDate = new Date(new Date(MessageTime).getTime() + 24 * 60 * 60 * 1000).toDateString();
+
                 const dateSeparator = document.createElement('div');
                 dateSeparator.classList.add('chat-date-separator');
-                dateSeparator.innerHTML = `<span>${formatDate(lastDate)}</span>`;
+                dateSeparator.innerHTML = `<span>${formatDate(new Date(newMessageDate))}</span>`;
                 fragment.insertBefore(dateSeparator, fragment.firstChild);
-                lastDate = messageDate;
             }
 
             if (message.from !== currentUser.id) {
@@ -481,7 +479,10 @@ document.querySelector('#messages').addEventListener('scroll', async function ()
             fragment.insertBefore(messageElement, fragment.firstChild);
         });
 
+        const scrollPosition = messagesContainer.scrollHeight - messagesContainer.scrollTop;
         messagesContainer.insertBefore(fragment, messagesContainer.firstChild);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight - scrollPosition;
+
         lastMessageId = chatMessages[chatMessages.length - 1]._id;
 
         setTimeout(() => {
