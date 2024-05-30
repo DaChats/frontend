@@ -135,7 +135,6 @@ async function getChat(chatid) {
     const messagesContainer = document.getElementById('messages');
     const userinfo2 = document.getElementById('user2-info');
 
-    messagesContainer.innerHTML = '';
     let html = '';
 
     const currentUser = chatData.data.members[0];
@@ -170,13 +169,10 @@ async function getChat(chatid) {
         if (messageDate !== lastMessageDate) {
             console.log('Creating date separator...');
             lastMessageDate = messageDate;
-            const newMessageDate = new Date(new Date(MessageTime).getTime() + 24 * 60 * 60 * 1000).toDateString();
-    
-            messagesContainer.innerHTML += `<div class="chat-date-separator"><span>${formatDate(new Date(newMessageDate))}</span></div>`;
+            html += `<div class="chat-date-separator"><span>${formatDate(new Date(messageDate))}</span></div>`;
         }
     
         var urlRegex = /(https?:\/\/[^\s]+)/g;
-    
         var linkedMessage = message.replace(urlRegex, function (url) {
             return '<a href="' + url + '">' + url + '</a>';
         });
@@ -198,8 +194,8 @@ async function getChat(chatid) {
                 </div>
             `;
         }
-    }    
-
+    }
+    
     messagesContainer.innerHTML = html;
 
     function scrollToBottom() {
@@ -454,12 +450,11 @@ document.querySelector('#messages').addEventListener('scroll', async function ()
             if (messageDate !== lastMessageDate) {
                 console.log('Creating date separator...');
                 lastMessageDate = messageDate;
-                const newMessageDate = new Date(new Date(MessageTime).getTime() + 24 * 60 * 60 * 1000).toDateString();
 
                 const dateSeparator = document.createElement('div');
                 dateSeparator.classList.add('chat-date-separator');
-                dateSeparator.innerHTML = `<span>${formatDate(new Date(newMessageDate))}</span>`;
-                fragment.insertBefore(dateSeparator, fragment.firstChild);
+                dateSeparator.innerHTML = `<span>${formatDate(new Date(messageDate))}</span>`;
+                fragment.appendChild(dateSeparator);
             }
 
             if (message.from !== currentUser.id) {
@@ -476,7 +471,7 @@ document.querySelector('#messages').addEventListener('scroll', async function ()
                     <p class="chat-time">${message.time}</p>
                 `;
             }
-            fragment.insertBefore(messageElement, fragment.firstChild);
+            fragment.appendChild(messageElement);
         });
 
         const scrollPosition = messagesContainer.scrollHeight - messagesContainer.scrollTop;
