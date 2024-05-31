@@ -28,12 +28,12 @@ async function userloggedin() {
             }
         } else {
             alert('Kérlek jelentzzbe előbb!');
-            window.location.href = '../login.html';
+            window.location.href = '../index.html';
             return;
         }
     } else {
         alert('Kérlek jelentzzbe előbb!');
-        window.location.href = '../login.html';
+        window.location.href = '../index.html';
         return;
     }
 }
