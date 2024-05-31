@@ -86,10 +86,11 @@ async function getChats() {
         html += `
         <div class="chat" onclick="getChat('${chatid}')" id="${chatid}">
                         <div class="chat-img-container">
-                            <img src="https://api.dachats.online/api/files?filename=${friendavatar}" alt="user" class="chat-img" onerror="this.style.display='none'; document.querySelector('.status-dot').classList.add('${friendstatus}');">
+                        <img src="https://api.dachats.online/api/files?filename=${friendavatar}" alt="${friendUsername}" class="chat-img" onerror="this.style.display='none'; document.querySelector('.status-dot').classList.add('${friendstatus}');">
+                            
                             <div class="status-dot-${friendstatus}"></div>
                         </div>
-                        <p class="chat-name">${friendUsername}</p>
+                        <a onclick="getChat('${chatid}')" id="${chatid}"><p class="chat-name">${friendUsername}</p></a>
                     </div>    
         `;
     }
