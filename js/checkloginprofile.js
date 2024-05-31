@@ -3,7 +3,7 @@ async function checklogin() {
     console.log('checklogin() called');
     const cookie = document.cookie;
     const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
-    console.log(token);
+    ;
     if (token) {
         const getUserData = await fetch(`https://api.dachats.online/api/auth/login?token=${token}`, {
             method: 'GET',

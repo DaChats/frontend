@@ -3,7 +3,7 @@ async function twofa() {
 
     const cookie = document.cookie;
     const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
-    console.log(token);
+    ;
 
     const twofa = await fetch(`https://api.dachats.online/api/2fa?token=${token}`)
     const twofaData = await twofa.json();

@@ -5,7 +5,7 @@ async function userloggedin() {
     const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
     const useridCookie = document.cookie.split('; ').find(row => row.startsWith('userid='));
     const userid = useridCookie ? useridCookie.split('=')[1] : null;
-    console.log(token);
+    ;
     console.log(userid);
 
     if (token) {

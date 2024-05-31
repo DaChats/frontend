@@ -6,7 +6,7 @@ async function checklogin() {
 
     const cookie = document.cookie;
     const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
-    console.log(token);
+    ;
 
     if (token) {
         const getUserData = await fetch(`https://api.dachats.online/api/auth/login?token=${token}`, {
@@ -59,7 +59,7 @@ async function checklogin() {
             </li>
         </div>`;
     } else {
-        div.innerHTML = '<a class="nav-link" href="./login.html"><img src="images/login button.png" alt="Login"></a>';
+        div.innerHTML = '<a class="nav-link" type="button" href="./login.html"><img src="images/login button.png" alt="Login"></a>';
     }
 }
 

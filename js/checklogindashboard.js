@@ -5,7 +5,7 @@ async function checklogin() {
 
     const cookie = document.cookie;
     const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
-    console.log(token);
+    ;
 
     if (token) {
         setTimeout(async () => {
