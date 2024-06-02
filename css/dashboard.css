@@ -91,6 +91,8 @@ button {
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
+    min-width: 40px;
+    min-height: 40px;
 }
 
 .chat-messages .chat-message .chat-text {
@@ -98,6 +100,9 @@ button {
     padding: 10px;
     border-radius: 20px;
     color: #000;
+    max-width: 40%;
+    white-space: pre-wrap;
+    word-break: break-all;
 }
 
 .left-sidebar {
