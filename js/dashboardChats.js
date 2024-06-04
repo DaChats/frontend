@@ -118,6 +118,7 @@ async function getChat(chatid) {
     const cookie = document.cookie;
     let token = "";
     token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
+    const userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
 
     const chat = await fetch(`https://api.dachats.online/api/chat?token=${token}&chatid=${chatid}&limit=20`);
     const chatData = await chat.json();
@@ -152,7 +153,7 @@ async function getChat(chatid) {
             <p class="chat-name">${friend.username}</p>
         </div>
 
-        <button class="call-btn" type="button" onclick="voiceCall('${chatid}')">
+        <button class="call-btn" type="button" onclick="voiceCall('${friend.id}', '${userid}')">
             <img src="../images/call.svg" alt="call" class="call-img">
         </button>
     `;
@@ -166,18 +167,18 @@ async function getChat(chatid) {
         const MessageTime = chatMessages[i].createdAt;
         const messageDate = new Date(MessageTime).toDateString();
         console.log('Message date:', messageDate);
-    
+
         if (messageDate !== lastMessageDate) {
             console.log('Creating date separator...');
             lastMessageDate = messageDate;
             html += `<div class="chat-date-separator"><span>${formatDate(new Date(messageDate))}</span></div>`;
         }
-    
+
         var urlRegex = /(https?:\/\/[^\s]+)/g;
         var linkedMessage = message.replace(urlRegex, function (url) {
             return '<a href="' + url + '">' + url + '</a>';
         });
-    
+
         if (from === currentUser.id) {
             html += `
                 <div class="chat-message">
@@ -196,7 +197,7 @@ async function getChat(chatid) {
             `;
         }
     }
-    
+
     messagesContainer.innerHTML = html;
 
     function scrollToBottom() {
@@ -337,6 +338,24 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     })
+
+    socket.on('call', async (data) => {
+        console.log('Received call:', data);
+
+        const popupContainer = document.getElementById('popup-container');
+        const popupContent = document.getElementById('popup-content');
+        const profilePicture = document.getElementById('profile-picture');
+        
+        profilePicture.src = `https://api.dachats.online/api/files?filename=${data.avatar}`; 
+        popupContent.innerText = `Incoming call from ${data.username}`;
+        popupContainer.style.display = 'flex';
+
+        // sound notification
+
+        setTimeout(() => {
+            closePopup();
+        }, 30000);
+    });
 
     socket.on('message', async (data) => {
         console.log('Received message:', data);
@@ -491,4 +510,26 @@ document.querySelector('#messages').addEventListener('scroll', async function ()
 function scrollToBottom() {
     const container = document.getElementById("messages");
     container.scrollTop = container.scrollHeight;
+}
+
+async function voiceCall(friendid, userid) {
+    console.log('Calling friend:', friendid);
+    socket.emit('call', { from: userid, to: friendid });
+}
+
+function closePopup() {
+    const popupContainer = document.getElementById('popup-container');
+    popupContainer.style.display = 'none';
+}
+
+function acceptCall() {
+    console.log('Call accepted');
+    alert('Call accepted')
+    closePopup();
+}
+
+function rejectCall() {
+    console.log('Call rejected');
+    alert('Call rejected')
+    closePopup();
 }

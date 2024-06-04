@@ -75,12 +75,21 @@
                 </button>
             </div>
         </div>
+
+        <div id="popup-container" class="popup-container">
+            <div id="call-popup" class="popup">
+                <button class="close-btn" onclick="closePopup()">X</button>
+                <img id="profile-picture" src="" alt="Profile Picture">
+                <div id="popup-content"></div>
+                <button class="accept-btn" onclick="acceptCall()">✔</button>
+                <button class="reject-btn" onclick="rejectCall()">✘</button>
+            </div>
+        </div>
     </main>
     <script src="../js/checklogindashboard.js"></script>
     <script src="../js/userkerese.js"></script>
     <script src="../js/friend.js"></script>
     <script src="../js/sidebar.js"></script>
     <script src="../js/dashboardChats.js"></script>
-    <script src="../js/vc.js" defer></script>
 </body>
 </html>
