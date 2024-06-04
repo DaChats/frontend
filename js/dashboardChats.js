@@ -339,20 +339,41 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     })
 
+    socket.on('answer', async (data) => {
+        console.log('Received answer:', data);
+
+        if (data.answer) {
+            console.log('Call accepted');
+            alert('Call accepted')
+        } else {
+            console.log('Call rejected');
+            alert('Call rejected')
+        }
+    });
+
     socket.on('call', async (data) => {
         console.log('Received call:', data);
 
         const popupContainer = document.getElementById('popup-container');
         const popupContent = document.getElementById('popup-content');
         const profilePicture = document.getElementById('profile-picture');
-        
-        profilePicture.src = `https://api.dachats.online/api/files?filename=${data.avatar}`; 
+
+        profilePicture.src = `https://api.dachats.online/api/files?filename=${data.avatar}`;
         popupContent.innerText = `Incoming call from ${data.username}`;
         popupContainer.style.display = 'flex';
+
+        const cookie = document.cookie;
+        const userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
+
+        localStorage.setItem('friendid', data.id);
+        localStorage.setItem('userid', userid);
 
         // sound notification
 
         setTimeout(() => {
+            localStorage.removeItem('friendid');
+            localStorage.removeItem('userid');
+
             closePopup();
         }, 30000);
     });
@@ -524,12 +545,44 @@ function closePopup() {
 
 function acceptCall() {
     console.log('Call accepted');
+
+    const friendid = localStorage.getItem('friendid');
+    const userid = localStorage.getItem('userid');
+
+    console.log(friendid, userid);
+
+    localStorage.removeItem('friendid');
+    localStorage.removeItem('userid');
+
+    const data = {
+        answer: true,
+        from: userid,
+        to: friendid
+    }
+
+    socket.emit('answer', data);
+
     alert('Call accepted')
     closePopup();
 }
 
 function rejectCall() {
     console.log('Call rejected');
-    alert('Call rejected')
+
+    const friendid = localStorage.getItem('friendid');
+    const userid = localStorage.getItem('userid');
+
+    console.log(friendid, userid);
+
+    localStorage.removeItem('friendid');
+    localStorage.removeItem('userid');
+
+    const data = {
+        answer: false,
+        from: userid,
+        to: friendid
+    }
+
+    socket.emit('answer', data);
     closePopup();
 }
