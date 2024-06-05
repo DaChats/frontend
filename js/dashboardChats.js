@@ -12,7 +12,6 @@ function formatDate(date) {
     return new Date(date).toLocaleDateString(undefined, options);
 }
 
-
 document.addEventListener('keydown', function (event) {
     if (event.key === 'Enter') {
         button.click();
@@ -184,7 +183,6 @@ async function getChat(chatid) {
                 <div class="chat-message">
                     <img src="https://api.dachats.online/api/files?filename=${currentUser.avatar}" alt="user" class="chat-img">
                     <p class="chat-text">${linkedMessage}</p>
-                    <p class="chat-time">${time}</p>
                 </div>
             `;
         } else {
@@ -192,7 +190,6 @@ async function getChat(chatid) {
                 <div class="chat-message user2">
                     <img src="https://api.dachats.online/api/files?filename=${friend.avatar}" alt="user" class="chat-img">
                     <p class="chat-text">${linkedMessage}</p>
-                    <p class="chat-time">${time}</p>
                 </div>
             `;
         }
@@ -279,7 +276,6 @@ async function sendMessage() {
         <div class="chat-message">
             <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
             <p class="chat-text">${linkedMessage}</p>
-            <p class="chat-time">${time}</p>
         </div>
     `;
 
@@ -423,7 +419,6 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="chat-message user2">
             <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
             <p class="chat-text">${linkedMessage}</p>
-            <p class="chat-time">${data.time}</p>
         </div>
         `;
 
@@ -503,13 +498,11 @@ document.querySelector('#messages').addEventListener('scroll', async function ()
                 messageElement.innerHTML = `
                     <img src="https://api.dachats.online/api/files?filename=${friend.avatar}" alt="user" class="chat-img">
                     <p class="chat-text">${message.message.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1">$1</a>')}</p>
-                    <p class="chat-time">${message.time}</p>
                 `;
             } else {
                 messageElement.innerHTML = `
                     <img src="https://api.dachats.online/api/files?filename=${currentUser.avatar}" alt="user" class="chat-img">
                     <p class="chat-text">${message.message.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1">$1</a>')}</p>
-                    <p class="chat-time">${message.time}</p>
                 `;
             }
             fragment.appendChild(messageElement);
