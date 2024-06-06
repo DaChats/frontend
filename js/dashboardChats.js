@@ -29,11 +29,6 @@ const formatDateToPretty = (date) => {
 
 const button = document.getElementById('send-btn');
 
-function formatDate(date) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(date).toLocaleDateString(undefined, options);
-}
-
 document.addEventListener('keydown', function (event) {
     if (event.key === 'Enter') {
         button.click();
@@ -181,17 +176,8 @@ async function getChat(chatid) {
 
     for (let i = 0; i < chatMessages.length; i++) {
         const message = chatMessages[i].message;
-        const time = chatMessages[i].time;
         const from = chatMessages[i].from;
         const MessageTime = chatMessages[i].createdAt;
-        const messageDate = new Date(MessageTime).toDateString();
-        console.log('Message date:', messageDate);
-
-        if (messageDate !== lastMessageDate) {
-            console.log('Creating date separator...');
-            lastMessageDate = messageDate;
-            html += `<div class="chat-date-separator"><span>${formatDate(new Date(messageDate))}</span></div>`;
-        }
 
         var urlRegex = /(https?:\/\/[^\s]+)/g;
         var linkedMessage = message.replace(urlRegex, function (url) {
@@ -526,18 +512,6 @@ document.querySelector('#messages').addEventListener('scroll', async function ()
             const messageElement = document.createElement('div');
             messageElement.classList.add('chat-message');
             const MessageTime = message.createdAt;
-            const messageDate = new Date(MessageTime).toDateString();
-            console.log('Message date:', messageDate);
-
-            if (messageDate !== lastMessageDate) {
-                console.log('Creating date separator...');
-                lastMessageDate = messageDate;
-
-                const dateSeparator = document.createElement('div');
-                dateSeparator.classList.add('chat-date-separator');
-                dateSeparator.innerHTML = `<span>${formatDate(new Date(messageDate))}</span>`;
-                fragment.appendChild(dateSeparator);
-            }
 
             if (message.from !== currentUser.id) {
                 messageElement.classList.add('user2');
