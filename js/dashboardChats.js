@@ -5,6 +5,28 @@ let moreMessages = true
 let currentDate = new Date().toDateString();
 let lastMessageDate = null;
 
+const formatDateToPretty = (date) => {
+    const d = new Date(date)
+    const now = new Date()
+    const diffInSeconds = Math.floor((now.getTime() - d.getTime()) / 1000)
+    const diffInMinutes = Math.floor(diffInSeconds / 60)
+    const diffInHours = Math.floor(diffInMinutes / 60)
+    const diffInDays = Math.floor(diffInHours / 24)
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+    if (diffInSeconds < 60) {
+        return `${diffInSeconds} seconds ago`
+    } else if (diffInMinutes < 60) {
+        return `${diffInMinutes} minutes ago`
+    } else if (diffInHours < 24) {
+        return `${diffInHours} hours ago`
+    } else if (diffInDays < 7) {
+        return `${daysOfWeek[d.getDay()]}`
+    } else {
+        return d.toLocaleDateString()
+    }
+}
+
 const button = document.getElementById('send-btn');
 
 function formatDate(date) {
@@ -180,17 +202,20 @@ async function getChat(chatid) {
 
         if (from === currentUser.id) {
             html += `
-                <div class="chat-message">
-                    <img src="https://api.dachats.online/api/files?filename=${currentUser.avatar}" alt="user" class="chat-img">
-                    <p class="chat-text">${linkedMessage}</p>
-                </div>
+            <div class="chat-message">
+                <img src="https://api.dachats.online/api/files?filename=${currentUser.avatar}" alt="user" class="chat-img">
+                <p class="chat-text">${linkedMessage}</p>
+            </div>         
             `;
         } else {
             html += `
-                <div class="chat-message user2">
-                    <img src="https://api.dachats.online/api/files?filename=${friend.avatar}" alt="user" class="chat-img">
+            <div class="chat-message user2">
+                <img src="https://api.dachats.online/api/files?filename=${friend.avatar}" alt="user" class="chat-img">
+                <div class="message-details">
+                    <p class="user-info">${friend.username} <span class="timestamp-real">${formatDateToPretty(MessageTime)}</span></p>
                     <p class="chat-text">${linkedMessage}</p>
                 </div>
+            </div>
             `;
         }
     }
