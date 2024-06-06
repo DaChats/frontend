@@ -106,13 +106,12 @@ async function getChats() {
 
         html += `
         <div class="chat" onclick="getChat('${chatid}')" id="${chatid}">
-                        <div class="chat-img-container">
-                        <img src="https://api.dachats.online/api/files?filename=${friendavatar}" alt="${friendUsername}" class="chat-img" onerror="this.style.display='none'; document.querySelector('.status-dot').classList.add('${friendstatus}');">
-                            
-                            <div class="status-dot-${friendstatus}"></div>
-                        </div>
-                        <a onclick="getChat('${chatid}')" id="${chatid}"><p class="chat-name">${friendUsername}</p></a>
-                    </div>    
+                <div class="chat-img-container">
+                    <img src="https://api.dachats.online/api/files?filename=${friendavatar}" alt="${friendUsername}" class="chat-img" onerror="this.style.display='none'; document.querySelector('.status-dot').classList.add('${friendstatus}');">        
+                    <div class="status-dot-${friendstatus}"></div>
+                </div>
+            <a onclick="getChat('${chatid}')" id="${chatid}"><p class="chat-name">${friendUsername}</p></a>
+        </div>    
         `;
     }
 
@@ -173,7 +172,6 @@ async function getChat(chatid) {
             <img src="https://api.dachats.online/api/files?filename=${friend.avatar}" alt="user" class="chat-img">
             <p class="chat-name">${friend.username}</p>
         </div>
-
         <button class="call-btn" type="button" onclick="voiceCall('${friend.id}', '${userid}')">
             <img src="../images/call.svg" alt="call" class="call-img">
         </button>
@@ -201,7 +199,7 @@ async function getChat(chatid) {
         });
 
         if (from === currentUser.id) {
-            html += `
+            html += ` 
             <div class="chat-message">
                 <div class="message-details">
                     <p class="user-info">${currentUser.username}<span class="timestamp-real">${formatDateToPretty(MessageTime)}</span></p>
@@ -210,7 +208,7 @@ async function getChat(chatid) {
                         <p class="chat-text">${linkedMessage}</p>
                     </div>
                 </div>
-            </div>         
+            </div>
             `;
         } else {
             html += `
@@ -297,6 +295,7 @@ async function sendMessage() {
     }
 
     const avatar = userData.data.avatar;
+    const username = userData.data.username;
 
     var urlRegex = /(https?:\/\/[^\s]+)/g;
 
@@ -304,11 +303,18 @@ async function sendMessage() {
         return '<a href="' + url + '">' + url + '</a>';
     });
 
+    // Data.now() ban nem vagyok biztos
+
     let html = `
-        <div class="chat-message">
-            <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
-            <p class="chat-text">${linkedMessage}</p>
+    <div class="chat-message">
+        <div class="message-details">
+            <p class="user-info">${username}<span class="timestamp-real">${formatDateToPretty(Date.now())}</span></p>
+            <div class="message-main">
+                <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
+                <p class="chat-text">${linkedMessage}</p>
+            </div>
         </div>
+    </div>
     `;
 
     messagesContainer.innerHTML += html;
@@ -430,6 +436,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const avatar = userData.data.avatar;
+        const username = userData.data.username;
         const id = userData.data.id;
 
         if (id == userid) {
@@ -447,10 +454,17 @@ document.addEventListener('DOMContentLoaded', function () {
             return '<a href="' + url + '">' + url + '</a>';
         });
 
+        //  Date.now() ban nem vagyok biztos
+
         let html = `
         <div class="chat-message user2">
-            <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
-            <p class="chat-text">${linkedMessage}</p>
+            <div class="message-details">
+                <p class="user-info">${username} <span class="timestamp-real">${formatDateToPretty(Date.now())}</span></p>
+                <div class="message-main">
+                    <img src="https://api.dachats.online/api/files?filename=${avatar}" alt="user" class="chat-img">
+                    <p class="chat-text">${linkedMessage}</p>
+                </div>
+            </div>
         </div>
         `;
 
@@ -528,13 +542,23 @@ document.querySelector('#messages').addEventListener('scroll', async function ()
             if (message.from !== currentUser.id) {
                 messageElement.classList.add('user2');
                 messageElement.innerHTML = `
-                    <img src="https://api.dachats.online/api/files?filename=${friend.avatar}" alt="user" class="chat-img">
-                    <p class="chat-text">${message.message.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1">$1</a>')}</p>
+                <div class="message-details">
+                    <p class="user-info">${friend.username} <span class="timestamp-real">${formatDateToPretty(MessageTime)}</span></p>
+                    <div class="message-main">
+                        <img src="https://api.dachats.online/api/files?filename=${friend.avatar}" alt="user" class="chat-img">
+                        <p class="chat-text">${message.message.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1">$1</a>')}</p>
+                    </div>
+                </div>
                 `;
             } else {
                 messageElement.innerHTML = `
-                    <img src="https://api.dachats.online/api/files?filename=${currentUser.avatar}" alt="user" class="chat-img">
-                    <p class="chat-text">${message.message.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1">$1</a>')}</p>
+                <div class="message-details">
+                    <p class="user-info">${currentUser.username}<span class="timestamp-real">${formatDateToPretty(MessageTime)}</span></p>
+                    <div class="message-main">
+                        <img src="https://api.dachats.online/api/files?filename=${currentUser.avatar}" alt="user" class="chat-img">
+                        <p class="chat-text">${message.message.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1">$1</a>')}</p>
+                    </div>
+                </div>
                 `;
             }
             fragment.appendChild(messageElement);
