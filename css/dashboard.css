@@ -79,7 +79,6 @@ button {
     gap: 10px;
     flex-direction: row-reverse;
     align-items: center;
-    max-width: 100%;
 }
 
 .chat-message.user2 {
@@ -93,13 +92,25 @@ button {
 }
 
 .chat-message .message-details .user-info {
+    margin-right: 55px;
+    flex-direction: row-reverse;
+    gap: 5px;
+}
+
+.chat-message.user2 .message-details .user-info {
     margin-left: 55px;
+    flex-direction: row;
 }
 
 .chat-messages .chat-message .message-details .message-main {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-direction: row-reverse;
+}
+
+.chat-message.user2 .message-details .message-main {
+    flex-direction: row;
 }
 
 .chat-messages .chat-message img {

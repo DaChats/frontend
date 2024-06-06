@@ -203,8 +203,13 @@ async function getChat(chatid) {
         if (from === currentUser.id) {
             html += `
             <div class="chat-message">
-                <img src="https://api.dachats.online/api/files?filename=${currentUser.avatar}" alt="user" class="chat-img">
-                <p class="chat-text">${linkedMessage}</p>
+                <div class="message-details">
+                    <p class="user-info">${currentUser.username}<span class="timestamp-real">${formatDateToPretty(MessageTime)}</span></p>
+                    <div class="message-main">
+                        <img src="https://api.dachats.online/api/files?filename=${currentUser.avatar}" alt="user" class="chat-img">
+                        <p class="chat-text">${linkedMessage}</p>
+                    </div>
+                </div>
             </div>         
             `;
         } else {
