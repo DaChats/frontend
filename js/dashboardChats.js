@@ -210,10 +210,12 @@ async function getChat(chatid) {
         } else {
             html += `
             <div class="chat-message user2">
-                <img src="https://api.dachats.online/api/files?filename=${friend.avatar}" alt="user" class="chat-img">
                 <div class="message-details">
                     <p class="user-info">${friend.username} <span class="timestamp-real">${formatDateToPretty(MessageTime)}</span></p>
-                    <p class="chat-text">${linkedMessage}</p>
+                    <div class="message-main">
+                        <img src="https://api.dachats.online/api/files?filename=${friend.avatar}" alt="user" class="chat-img">
+                        <p class="chat-text">${linkedMessage}</p>
+                    </div>
                 </div>
             </div>
             `;

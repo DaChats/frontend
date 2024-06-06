@@ -79,11 +79,27 @@ button {
     gap: 10px;
     flex-direction: row-reverse;
     align-items: center;
+    max-width: 100%;
 }
 
 .chat-message.user2 {
     flex-direction: row;
     align-items: center;
+}
+
+.chat-message .message-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-message .message-details .user-info {
+    margin-left: 55px;
+}
+
+.chat-messages .chat-message .message-details .message-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .chat-messages .chat-message img {
@@ -113,6 +129,7 @@ button {
     color: #dcddde;
     max-width: 75%;
     word-wrap: break-word;
+    word-break: break-all;
 }
 
 .left-sidebar {
