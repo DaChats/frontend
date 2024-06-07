@@ -576,9 +576,6 @@ function acceptCall() {
 
     console.log(friendid, userid);
 
-    localStorage.removeItem('friendid');
-    localStorage.removeItem('userid');
-
     const data = {
         answer: true,
         from: userid,
@@ -587,7 +584,10 @@ function acceptCall() {
 
     socket.emit('answer', data);
 
-    alert('Call accepted')
+    // redirect to call page (not implemented yet) end add callId to the url
+    // The callId is a random generated string that is used to identify the call (peer)
+
+    alert('Call accepted');
     closePopup();
 }
 
@@ -610,4 +610,53 @@ function rejectCall() {
 
     socket.emit('answer', data);
     closePopup();
+}
+
+async function call() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const callId = urlParams.get('callId');
+
+    console.log('Calling friend:', callId);
+
+    if (!callId) {
+        console.error('Missing callId');
+        return;
+    }
+
+    const friendId = localStorage.getItem('friendid');
+    const userId = localStorage.getItem('userid');
+
+    console.log(friendId, userId);
+
+    const cookie = document.cookie;
+    const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
+
+    const chats = await fetch(`https://api.dachats.online/api/chats?token=${token}`);
+    const chatsData = await chats.json();
+    console.log(chatsData)
+
+    if (chatsData.status != 200) {
+        console.error(chatsData.message);
+        return;
+    }
+
+    let chatId;
+
+    for (let i = 0; i < chatsData.data.length; i++) {
+        if (chatsData.data[i].members.includes(friendId) && chatsData.data[i].members.includes(userId)) {
+            chatId = chatsData.data[i].chatId;
+            console.log(chatId);
+        }
+    }
+
+    const data = {
+        token: token,
+        callId: callId,
+        chatId: chatId
+    }
+
+    localStorage.removeItem('friendid');
+    localStorage.removeItem('userid');
+
+    socket.emit('voice', data);
 }
