@@ -22,6 +22,8 @@ const formatDateToPretty = (date) => {
         return `${diffInHours} hours ago`
     } else if (diffInDays < 7) {
         return `${daysOfWeek[d.getDay()]}`
+    } else if (diffInDays >= 7) {
+        return `A week ago`;
     } else {
         return d.toLocaleDateString()
     }
