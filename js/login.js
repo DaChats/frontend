@@ -9,7 +9,7 @@ const getTokenFromCookie = () => {
 const redirectIfLoggedIn = () => {
     const token = getTokenFromCookie();
     if (token) {
-        location.href = './index.html';
+        location.href = './dashboard/index.html';
     }
 };
 
@@ -38,14 +38,14 @@ async function login() {
             body: JSON.stringify(loginData)
         });
 
-        if (!loginResponse.ok) {
-            alert('Hiba történt a bejelentkezés során! (Szerver nem elérhető!)');
-            return;
-        }
-
         const responseData = await loginResponse.json();
         console.log(responseData);
         const token = responseData.token;
+
+        if (!loginResponse.ok) {
+            alert(responseData.message);
+            return;
+        }
 
         const logging = await fetch(`https://api.dachats.online/api/auth/login?token=${token}`);
 
@@ -61,13 +61,18 @@ async function login() {
         const userData = await logging.json();
 
         if (userData.status == 200) {
-            const Mainap = new Date();
-            Mainap.setDate(Mainap.getDate() + 14);
-            document.cookie = `token=${token}; expires=${Mainap.toUTCString()}; path=/;`;
-            console.log('Token added to cookie');
-            location.href = './index.html';
+            if (userData.data.twofa) {
+                localStorage.setItem('token', token);
+                console.log('Token set....')
+                location.href = './2fa.html';
+            } else {
+                const Mainap = new Date();
+                Mainap.setDate(Mainap.getDate() + 14);
+                document.cookie = `token=${token}; path=/; expires=${Mainap.toUTCString()};`;
+                location.href = './dashboard/index.html';
+            }
         } else {
-            alert('Hiba történt a bejelentkezés során! (Rossz adatok!)');
+            alert(responseData.message);
             return;
         }
     } catch (error) {
