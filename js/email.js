@@ -1,4 +1,4 @@
-document.getElementById('inputText').addEventListener('input', function() {
+document.getElementById('inputText').addEventListener('input', function () {
     var inputText = document.getElementById('inputText').value;
     var formattedText = marked.parse(inputText);
     document.getElementById('preview').innerHTML = formattedText;
@@ -10,12 +10,8 @@ function kuldes() {
 
     console.log(formattedText);
 
-    const token = prompt('Kérlek add meg a tokenedet:');
-
-    if (!token) {
-        alert('Nem adtál meg tokent!');
-        return;
-    }
+    const cookie = document.cookie;
+    const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
 
     confirm('Biztosan elküldöd az emailt?')
 
@@ -30,12 +26,12 @@ function kuldes() {
             message: formattedText,
         })
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Az email sikeresen elküldve!');
-        } else {
-            alert('Hiba történt az email küldése közben!');
-        }
-    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Az email sikeresen elküldve!');
+            } else {
+                alert('Hiba történt az email küldése közben!');
+            }
+        })
 }
