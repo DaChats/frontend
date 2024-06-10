@@ -1,7 +1,13 @@
-document.getElementById('inputText').addEventListener('input', function () {
-    var inputText = document.getElementById('inputText').value;
-    var formattedText = marked.parse(inputText);
-    document.getElementById('preview').innerHTML = formattedText;
+document.addEventListener('DOMContentLoaded', function () {
+    var inputTextElement = document.getElementById('inputText');
+    if (inputTextElement) {
+        inputTextElement.addEventListener('input', function () {
+            console.log('input event fired');
+            var inputText = document.getElementById('inputText').value;
+            var formattedText = marked.parse(inputText);
+            document.getElementById('preview').innerHTML = formattedText;
+        });
+    }
 });
 
 function kuldes() {
@@ -13,7 +19,9 @@ function kuldes() {
     const cookie = document.cookie;
     const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
 
-    confirm('Biztosan elküldöd az emailt?')
+    if (!confirm('Biztosan elküldöd az emailt?')) {
+        return;
+    }
 
     fetch('https://api.dachats.online/api/admin/email', {
         method: 'POST',
@@ -26,12 +34,12 @@ function kuldes() {
             message: formattedText,
         })
     })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Az email sikeresen elküldve!');
-            } else {
-                alert('Hiba történt az email küldése közben!');
-            }
-        })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Az email sikeresen elküldve!');
+        } else {
+            alert('Hiba történt az email küldése közben!');
+        }
+    });
 }
