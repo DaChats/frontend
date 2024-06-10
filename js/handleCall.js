@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.log('answer', answer)
                 const call = peer.call(answer, stream)
 
-                call.on('stream', remoteStream => {
-                    document.getElementById('remote-video').srcObject = remoteStream
+                call.on('stream', (remoteStream) => {
+                    document.getElementById('friend-video').srcObject = remoteStream
                 })
             })
         })
@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 
                 call.answer(stream)
 
-                call.on('stream', remoteStream => {
-                    document.getElementById('remote-video').srcObject = remoteStream
+                call.on('stream', (remoteStream) => {
+                    document.getElementById('friend-video').srcObject = remoteStream
                 })
             })
         })
