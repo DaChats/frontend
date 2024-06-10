@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +17,9 @@
     <meta name="theme-color" content="#5A230C">
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
     <link rel="icon" href="../images/Logo64px.png" type="image/x-icon">
+    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 </head>
+
 <body class="Gotham" data-bs-theme="dark" style="height: 100%; overflow-y: hidden;">
     <nav class="main-nav">
         <a href="../index.html"><img src="../images/image4.png" alt="logo" class="logo"></a>
@@ -52,37 +55,20 @@
                 </div>
 
                 <button class="settings-btn" type="button">
-                    <a href="./profile/index.html"><img src="../images/settings.svg" alt="settings" class="settings-img"></a>
+                    <a href="./profile/index.html"><img src="../images/settings.svg" alt="settings"
+                            class="settings-img"></a>
                 </button>
-                <button class="leave-btn" type="button" onclick='document.cookie = "token=; path=/;";document.cookie = "userid=; path=/;";'>
-                    <a href="../index.html"><img src="../images/logout.svg" alt="logout" class="leave-btn" style="width: 25px;"></a>
+                <button class="leave-btn" type="button"
+                    onclick='document.cookie = "token=; path=/;";document.cookie = "userid=; path=/;";'>
+                    <a href="../index.html"><img src="../images/logout.svg" alt="logout" class="leave-btn"
+                            style="width: 25px;"></a>
                 </button>
             </div>
         </aside>
 
         <div class="chat-container">
-            <div class="chat-header" id="user2-info">
-
-            </div>
-
-            <div class="chat-messages" id="messages">
-            
-            </div>
-            <div class="chat-input">
-                <input type="text" class="message-input" id="message-input" placeholder="írj ide valamit...">
-                <button class="send-btn" type="button" id="send-btn" onclick="sendMessage()">
-                    Küldés
-                </button>
-            </div>
-        </div>
-
-        <div id="popup-container" class="popup-container">
-            <div id="call-popup" class="popup">
-                <img id="profile-picture" src="" alt="Profile Picture">
-                <div id="popup-content"></div>
-                <button class="accept-btn" onclick="acceptCall()">✔</button>
-                <button class="reject-btn" onclick="rejectCall()">✘</button>
-            </div>
+            <video autoplay muted id="user-video" class="user-video" style="width: 100%; height: 100%;"></video>
+            <video autoplay id="friend-video" class="friend-video" style="width: 100%; height: 100%;"></video>
         </div>
     </main>
     <script src="../js/checklogindashboard.js"></script>
@@ -90,5 +76,7 @@
     <script src="../js/friend.js"></script>
     <script src="../js/sidebar.js"></script>
     <script src="../js/dashboardChats.js"></script>
+    <script src="../js/handleCall.js"></script>
 </body>
+
 </html>

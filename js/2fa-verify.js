@@ -1,3 +1,15 @@
+let token;
+
+document.addEventListener('DOMContentLoaded', () => {
+    token = localStorage.getItem('token');
+    localStorage.removeItem('token');
+
+    if (!token) {
+        alert('Nem vagy bejelentkezve!');
+        location.href = './index.html';
+    }
+});
+
 async function verify() {
     const code = document.getElementById('code').value;
 
@@ -7,7 +19,7 @@ async function verify() {
     }
 
     try {
-        const verifyResponse = await fetch(`https://api.dachats.online/api/auth/verify?code=${code}`, {
+        const verifyResponse = await fetch(`https://api.dachats.online/api/2fa?token=${token}&code=${code}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -20,14 +32,12 @@ async function verify() {
         }
 
         const responseData = await verifyResponse.json();
-        console.log(responseData);
 
         if (responseData.status == 200) {
-            const token = responseData.data.token;
             const Mainap = new Date();
             Mainap.setDate(Mainap.getDate() + 14);
             document.cookie = `token=${token}; path=/; expires=${Mainap.toUTCString()};`;
-            location.href = './index.html';
+            location.href = './dashboard/index.html';
         } else {
             alert('Hiba történt a hitelesítés során! (Rossz kód!)');
             return;
@@ -35,9 +45,4 @@ async function verify() {
     } catch (error) {
         console.error('Hiba történt:', error);
     }
-}
-
-function ide() {
-    alert('Nem...')
-    return;
 }

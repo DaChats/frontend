@@ -4,8 +4,8 @@ async function userloggedin() {
     const cookie = document.cookie;
     const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
     const useridCookie = document.cookie.split('; ').find(row => row.startsWith('userid='));
-    const userid = useridCookie ? useridCookie.split('=')[1] : null;    
-    console.log(token);
+    const userid = useridCookie ? useridCookie.split('=')[1] : null;
+    ;
     console.log(userid);
 
     if (token) {
@@ -19,7 +19,7 @@ async function userloggedin() {
         if (getUserData.status == 200) {
             const userData = await getUserData.json();
             console.log('user is logged in: ' + userData.data.name);
-            
+
             if (!userid) {
                 document.cookie = `userid=${userData.data.id}; path=/;`;
                 console.log('userid cookie set');
@@ -28,12 +28,12 @@ async function userloggedin() {
             }
         } else {
             alert('Kérlek jelentzzbe előbb!');
-            window.location.href = '../login.html';
+            window.location.href = '../index.html';
             return;
         }
     } else {
         alert('Kérlek jelentzzbe előbb!');
-        window.location.href = '../login.html';
+        window.location.href = '../index.html';
         return;
     }
 }
