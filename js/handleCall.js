@@ -20,11 +20,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         })
 
         socket.on('answer', ({ answer, from }) => {
-            navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
-                document.getElementById('userVideo').srcObject = stream
+            navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
+                document.getElementById('user-video').srcObject = stream
+
+                console.log('answer', answer)
                 const call = peer.call(answer, stream)
+
                 call.on('stream', remoteStream => {
-                    document.getElementById('remoteVideo').srcObject = remoteStream
+                    document.getElementById('remote-video').srcObject = remoteStream
                 })
             })
         })
@@ -43,12 +46,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         peer.on('call', call => {
             navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
-                document.getElementById('userVideo').srcObject = stream
+                document.getElementById('user-video').srcObject = stream
                 
                 call.answer(stream)
 
                 call.on('stream', remoteStream => {
-                    document.getElementById('remoteVideo').srcObject = remoteStream
+                    document.getElementById('remote-video').srcObject = remoteStream
                 })
             })
         })
