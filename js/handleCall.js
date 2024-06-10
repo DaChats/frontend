@@ -4,15 +4,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const callTo = query.get('callTo');
     const callFrom = query.get('callFrom');
 
+    const cookie = document.cookie;
+    const userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
+
     let peer
     if (callTo) {
         peer = new Peer()
 
         peer.on('open', id => {
-            console.log(id)
             socket.emit('call-made', {
                 to: callTo,
-                offer: id
+                offer: id,
+                from: userid
             })
         })
 
@@ -33,7 +36,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         peer.on('open', id => {
             socket.emit('answer-made', {
                 to: callFrom,
-                answer: id
+                answer: id,
+                from: userid
             })
         })
 
