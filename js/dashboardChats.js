@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const cookie = document.cookie;
         const userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
 
-        localStorage.setItem('friendid', data.id);
+        localStorage.setItem('friendid', data.from);
         localStorage.setItem('userid', userid);
 
         // sound notification
