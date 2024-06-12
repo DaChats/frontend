@@ -148,6 +148,7 @@ async function getChat(chatid) {
 
     const messagesContainer = document.getElementById('messages');
     const userinfo2 = document.getElementById('user2-info');
+    const chatcontainer = document.getElementById('chat-container');
 
     let html = '';
 
@@ -157,6 +158,7 @@ async function getChat(chatid) {
     userinfo2.innerHTML = ""
 
     userinfo2.innerHTML = `
+    <div class="chat-header">
         <div class="chat-user" id="chat-user">
             <img src="https://api.dachats.online/api/files?filename=${friend.avatar}" alt="user" class="chat-img">
             <p class="chat-name">${friend.username}</p>
@@ -164,6 +166,7 @@ async function getChat(chatid) {
         <button class="call-btn" type="button" onclick="voiceCall('${friend.id}', '${userid}')">
             <img src="../images/call.svg" alt="call" class="call-img">
         </button>
+    </div>
     `;
 
     messagesContainer.innerHTML = '';
@@ -224,6 +227,11 @@ async function getChat(chatid) {
 let pressed = false;
 
 async function sendMessage() {
+    if (!currentChatId) {
+        console.warn('No chat selected');
+        return;
+    }
+
     const usermessage = document.getElementById('message-input').value;
 
     if (!usermessage) {

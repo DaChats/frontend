@@ -52,39 +52,45 @@
                 </div>
 
                 <button class="settings-btn" type="button">
-                    <a href="./profile/index.html"><img src="../images/settings.svg" alt="settings" class="settings-img"></a>
+                    <a href="./profile/index.html"><img src="../images/settings.svg" alt="settings"
+                            class="settings-img"></a>
                 </button>
-                <button class="leave-btn" type="button" onclick='document.cookie = "token=; path=/;";document.cookie = "userid=; path=/;";'>
-                    <a href="../index.html"><img src="../images/logout.svg" alt="logout" class="leave-btn" style="width: 25px;"></a>
+                <button class="leave-btn" type="button"
+                    onclick='document.cookie = "token=; path=/;";document.cookie = "userid=; path=/;";'>
+                    <a href="../index.html"><img src="../images/logout.svg" alt="logout" class="leave-btn"
+                            style="width: 25px;"></a>
                 </button>
             </div>
         </aside>
 
         <div class="chat-container">
-            <div class="chat-header" id="user2-info">
+            <div id="user2-info">
 
             </div>
 
             <div class="chat-messages" id="messages">
-            
-            </div>
+                <div style="display: block; margin-top: auto; margin-bottom: auto;">
+                    <h1 class="text-center">Itt még nincs semmi...</h1>
+                </div>
+
             <div class="chat-input">
                 <input type="text" class="message-input" id="message-input" placeholder="írj ide valamit...">
-                <button class="send-btn" type="button" id="send-btn" onclick="sendMessage()">
-                    Küldés
-                </button>
+                    <button class="send-btn" type="button" id="send-btn" onclick="sendMessage()">
+                        Küldés
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <div id="popup-container" class="popup-container">
-            <div id="call-popup" class="popup">
-                <img id="profile-picture" src="" alt="Profile Picture">
-                <div id="popup-content"></div>
-                <button class="accept-btn" onclick="acceptCall()">✔</button>
-                <button class="reject-btn" onclick="rejectCall()">✘</button>
+            <div id="popup-container" class="popup-container">
+                <div id="call-popup" class="popup">
+                    <img id="profile-picture" src="" alt="Profile Picture">
+                    <div id="popup-content"></div>
+                    <button class="accept-btn" onclick="acceptCall()">✔</button>
+                    <button class="reject-btn" onclick="rejectCall()">✘</button>
+                </div>
             </div>
-        </div>
     </main>
+
     <script src="../js/checklogindashboard.js"></script>
     <script src="../js/userkerese.js"></script>
     <script src="../js/friend.js"></script>
