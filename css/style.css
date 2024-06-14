@@ -209,3 +209,7 @@ body.popup-active {
 #2fa button[type="button"]:hover {
   background-color: #0056b3;
 }
+
+input {
+  border-radius: 10px;
+}
