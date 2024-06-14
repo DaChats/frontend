@@ -397,10 +397,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // sound notification
 
+        const audio = new Audio('../sounds/ringtone.mp3');
+        audio.volume = 0.1;
+        audio.play();
+
         setTimeout(() => {
             localStorage.removeItem('friendid');
             localStorage.removeItem('userid');
 
+            audio.pause();
+            audio.currentTime = 0;
             closePopup();
         }, 30000);
     });
@@ -551,8 +557,15 @@ function scrollToBottom() {
     container.scrollTop = container.scrollHeight;
 }
 
-async function voiceCall(friendid, userid) {
+async function voiceCall(friendid) {
     console.log('Calling friend:', friendid);
+
+    const cookie = document.cookie;
+    const userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
+
+    localStorage.setItem('friendid', friendid);
+    localStorage.getItem('userid', userid);
+
     window.location.href = './call.html?callTo=' + friendid;
 }
 
@@ -562,8 +575,6 @@ function closePopup() {
 }
 
 function acceptCall() {
-    console.log('Call accepted');
-
     const friendid = localStorage.getItem('friendid');
 
     // redirect to call page (not implemented yet) end add callId to the url
@@ -581,6 +592,8 @@ function rejectCall() {
     const userid = localStorage.getItem('userid');
 
     console.log(friendid, userid);
+
+    window.location.reload();
 
     localStorage.removeItem('friendid');
     localStorage.removeItem('userid');

@@ -515,6 +515,7 @@ button {
     color: #fff;
     width: 100%;
     backdrop-filter: blur(5px);
+    gap: 10px;
 }
 
 .video-container .friend-info {
@@ -527,6 +528,7 @@ button {
     color: #fff;
     width: 100%;
     backdrop-filter: blur(5px);
+    gap: 10px;
 }
 
 .video-container .friend-info .user-image {
