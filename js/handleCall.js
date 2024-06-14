@@ -1,5 +1,17 @@
+let peer = new Peer()
+
+let mediaOptions = {
+    audio: true,
+    video: true
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     const query = new URLSearchParams(window.location.search);
+    const userInfo = document.querySelector('.user-info')
+    const friendInfo = document.querySelector('.friend-info')
+
+    userInfo.style.display = 'none'
+    friendInfo.style.display = 'none'
 
     const callTo = query.get('callTo');
     const callFrom = query.get('callFrom');
@@ -7,10 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const cookie = document.cookie;
     const userid = cookie ? cookie.split('; ').find(row => row.startsWith('userid=')).split('=')[1] : null;
 
-    let peer
     if (callTo) {
-        peer = new Peer()
-
         peer.on('open', id => {
             socket.emit('call-made', {
                 to: callTo,
@@ -19,12 +28,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             })
         })
 
+        let call
         socket.on('answer', ({ answer, from }) => {
-            navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
+            navigator.mediaDevices.getUserMedia(mediaOptions).then((stream) => {
                 document.getElementById('user-video').srcObject = stream
 
+                userInfo.style.display = 'flex'
+                friendInfo.style.display = 'flex'
+
                 console.log('answer', answer)
-                const call = peer.call(answer, stream)
+                call = peer.call(answer, stream)
 
                 call.on('stream', (remoteStream) => {
                     document.getElementById('friend-video').srcObject = remoteStream
@@ -34,8 +47,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (callFrom) {
-        const peer = new Peer()
-
         peer.on('open', id => {
             socket.emit('answer-made', {
                 to: callFrom,
@@ -45,10 +56,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         })
 
         peer.on('call', call => {
-            navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
+            navigator.mediaDevices.getUserMedia(mediaOptions).then(stream => {
                 document.getElementById('user-video').srcObject = stream
                 
                 call.answer(stream)
+
+                userInfo.style.display = 'flex'
+                friendInfo.style.display = 'flex'
 
                 call.on('stream', (remoteStream) => {
                     document.getElementById('friend-video').srcObject = remoteStream
@@ -57,3 +71,48 @@ document.addEventListener('DOMContentLoaded', async () => {
         })
     }
 })
+
+const endCall = () => {
+    document.getElementById('user-video').srcObject.getTracks().forEach(track => track.stop())
+
+    document.getElementById('friend-video').srcObject.getTracks().forEach(track => track.stop())
+
+    window.location.href = '/dashboard'
+
+    socket.emit('end-call', {
+        to: callTo,
+        from: callFrom,
+        call: peer.id
+    })
+
+    peer.destroy()
+
+}
+
+const toggleAudio = () => {
+    const audio = document.getElementById('user-video').srcObject.getAudioTracks()[0]
+    audio.enabled = !audio.enabled
+
+    mediaOptions.audio = audio.enabled
+
+    socket.emit('toggle-audio', {
+        to: callTo,
+        from: callFrom,
+        call: peer.id,
+        audio: audio.enabled
+    })
+}
+
+const toggleVideo = () => {
+    const video = document.getElementById('user-video').srcObject.getVideoTracks()[0]
+    video.enabled = !video.enabled
+
+    mediaOptions.video = video.enabled
+
+    socket.emit('toggle-video', {
+        to: callTo,
+        from: callFrom,
+        call: peer.id,
+        video: video.enabled
+    })
+}

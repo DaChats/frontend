@@ -466,3 +466,79 @@ button {
     background-color: red;
     color: white;
 }
+
+.video-container {
+    display: flex;
+    max-width: 50%;
+    border-radius: 20px;
+    overflow: hidden;
+    min-width: 30%;
+    position: relative;
+}
+
+.call-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.main-call-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+}
+
+.call-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding-bottom: 20px;
+}
+
+.video-container .user-info {
+    position: absolute;
+    inset: 0;
+    bottom: 0;
+    max-height: 10%;
+    padding: 10px;
+    background: #00000067;
+    color: #fff;
+    width: 100%;
+    backdrop-filter: blur(5px);
+}
+
+.video-container .friend-info {
+    position: absolute;
+    inset: 0;
+    bottom: 0;
+    max-height: 10%;
+    padding: 10px;
+    background: #00000067;
+    color: #fff;
+    width: 100%;
+    backdrop-filter: blur(5px);
+}
+
+.video-container .friend-info .user-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.video-container .user-info .user-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
