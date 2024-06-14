@@ -576,12 +576,7 @@ function closePopup() {
 
 function acceptCall() {
     const friendid = localStorage.getItem('friendid');
-
-    // redirect to call page (not implemented yet) end add callId to the url
     window.location.href = `./call.html?callFrom=${friendid}`
-    // The callId is a random generated string that is used to identify the call (peer)
-
-    alert('Call accepted');
     closePopup();
 }
 
