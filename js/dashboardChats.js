@@ -314,6 +314,35 @@ async function sendMessage() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    function requestNotificationPermission() {
+        if (Notification.permission === "default") {
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    console.log("Notification permission granted.");
+                } else {
+                    console.log("Notification permission denied.");
+                }
+            });
+        } else if (Notification.permission === "granted") {
+            console.log("Notification permission already granted.");
+        } else {
+            console.log("Notification permission denied.");
+        }
+    }
+
+    function requestMediaPermissions() {
+        navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+            .then(stream => {
+                console.log("Microphone and camera permission granted.");
+            })
+            .catch(error => {
+                console.error("Microphone and camera permission denied or error occurred:", error);
+            });
+    }
+
+    requestNotificationPermission();
+    requestMediaPermissions();
+
     socket.on('connect', () => {
         console.log('Connected to WS server.');
     });
