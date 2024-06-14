@@ -1,9 +1,15 @@
 async function checklogin() {
     const div = document.getElementById('login');
+    let token = null;
 
-    const cookie = document.cookie;
-    const token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
-    ;
+    try {
+        const cookie = document.cookie;
+        token = cookie ? cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1] : null;
+    } catch (error) {
+        document.cookie = 'token=; path=/;';
+        document.cookie = 'userid=; path=/;';
+        location.reload();
+    }
 
     if (token) {
         const getUserData = await fetch(`https://api.dachats.online/api/auth/login?token=${token}`, {

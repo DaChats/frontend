@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         peer.on('call', call => {
             navigator.mediaDevices.getUserMedia(mediaOptions).then(stream => {
                 document.getElementById('user-video').srcObject = stream
-                
+
                 call.answer(stream)
 
                 userInfo.style.display = 'flex'
@@ -77,17 +77,33 @@ const endCall = () => {
 
     document.getElementById('friend-video').srcObject.getTracks().forEach(track => track.stop())
 
-    window.location.href = '/dashboard'
+    const én = localStorage.getItem('userid')
+    const ő = localStorage.getItem('friendid')
 
     socket.emit('end-call', {
-        to: callTo,
-        from: callFrom,
+        to: ő,
+        from: én,
         call: peer.id
-    })
+    });
 
     peer.destroy()
+    window.location.href = './index.html'
 
+    localStorage.removeItem('userid')
+    localStorage.removeItem('friendid')
+
+    return;
 }
+
+socket.on('end-call', async (data) => {
+    document.getElementById('user-video').srcObject.getTracks().forEach(track => track.stop())
+
+    document.getElementById('friend-video').srcObject.getTracks().forEach(track => track.stop())
+
+    peer.destroy()
+    window.location.href = './index.html'
+    return;
+});
 
 const toggleAudio = () => {
     const audio = document.getElementById('user-video').srcObject.getAudioTracks()[0]
