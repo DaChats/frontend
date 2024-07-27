@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/icon.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <title>DaChats Dashboard</title>
+    <script src="../js/userloggedin.js"></script>
+    <meta name="description" content="DaChats, Beszélgess másokkal, okosabban, szebben.">
+    <meta name="keywords" content="DaChats, chat, beszélgetés">
+    <meta name="author" content="Dachats">
+    <meta name="theme-color" content="#5A230C">
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <link rel="icon" href="../images/Logo64px.png" type="image/x-icon">
+</head>
+<body class="Gotham" data-bs-theme="dark" style="height: 100%; overflow-y: hidden;">
+    <nav class="main-nav">
+        <a href="../index.html"><img src="../images/image4.png" alt="logo" class="logo"></a>
+
+        <div class="hamburger" onclick="openSidebar()">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </nav>
+
+    <main class="main-container">
+        <aside class="left-sidebar">
+            <div class="side-header">
+                <input type="text" class="search-input" id="search" placeholder="Keresés..."
+                    oninput="userkerese(this.value)">
+
+                <div class="users-found" id="users"></div>
+            </div>
+
+            <div class="chats" id="chats">
+                <div class="chat animate-pulse">
+                    <div class="chat-img-container">
+                        <img src="https://api.dachats.online/api/files?filename=default.jpg" alt="user" class="chat-img"
+                            onerror="this.style.display='none'; document.querySelector('.status-dot').classList.add('${friendstatus}');">
+                    </div>
+                    <p class="chat-name">Felhasználó</p>
+                </div>
+            </div>
+
+            <div class="user-profile">
+                <div class="user-container" id="user-info">
+                </div>
+
+                <button class="settings-btn" type="button">
+                    <a href="./profile/index.html"><img src="../images/settings.svg" alt="settings"
+                            class="settings-img"></a>
+                </button>
+                <button class="leave-btn" type="button"
+                    onclick='document.cookie = "token=; path=/;";document.cookie = "userid=; path=/;";'>
+                    <a href="../index.html"><img src="../images/logout.svg" alt="logout" class="leave-btn"
+                            style="width: 25px;"></a>
+                </button>
+            </div>
+        </aside>
+
+        <div class="chat-container">
+            <div id="user2-info">
+
+            </div>
+
+            <div class="chat-messages" id="messages">
+                <div style="display: block; margin-top: auto; margin-bottom: auto;">
+                    <h1 class="text-center">Itt még nincs semmi...</h1>
+                </div>
+            </div>
+
+            <div class="chat-input">
+                <input type="text" class="message-input" id="message-input" placeholder="írj ide valamit...">
+                <button class="send-btn" type="button" id="send-btn" onclick="sendMessage()">
+                    Küldés
+                </button>
+            </div>
+        </div>
+
+            <div id="popup-container" class="popup-container">
+                <div id="call-popup" class="popup">
+                    <img id="profile-picture" src="" alt="Profile Picture">
+                    <div id="popup-content"></div>
+                    <button class="accept-btn" onclick="acceptCall()">✔</button>
+                    <button class="reject-btn" onclick="rejectCall()">✘</button>
+                </div>
+            </div>
+    </main>
+
+    <script src="../js/checklogindashboard.js"></script>
+    <script src="../js/userkerese.js"></script>
+    <script src="../js/friend.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/dashboardChats.js"></script>
+</body>
+</html>

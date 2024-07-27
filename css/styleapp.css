@@ -1,0 +1,44 @@
+@font-face {
+  font-family: Gotham;
+  src: url(../fonts/HomepageBaukasten-Bold.ttf) format('truetype'),
+}
+
+.Gotham {
+  font-family: Gotham;
+}
+
+.dropdown:hover>.dropdown-menu {
+  display: block !important;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block !important;
+  left: 100%;
+  margin-top: -37px;
+}
+
+.dropdown-toggle {
+  margin-left: 5px;
+}
+
+.dropdown-toggle::after {
+  font-size: var(--font-md);
+  margin-bottom: -2px;
+}
+
+.dropdown-menu li a.active {
+  color: #fff;
+}
+
+.custom-toggle-arrow {
+  font-size: 18px;
+  margin-top: 1px;
+  line-height: 12px;
+}
+
+.servernav {
+  position: relative;
+  min-width: 72px;
+  width: 72px;
+  flex-shrink: 0;
+}
